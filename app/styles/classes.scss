@@ -1,0 +1,67 @@
+.standard-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: auto;
+    max-width: 480px;
+
+    h1{
+        margin-bottom: 0.5rem
+    }
+
+    label{
+        display: flex;
+        flex-direction: column;
+    }
+
+
+
+    .two-buttons{
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    button{
+        align-self: flex-start;
+    }
+}
+
+
+/*boxes*/
+
+.box{
+    padding: 0.5rem 0.5rem;
+    border-radius: 0.5rem;
+
+    &-sm{
+        padding: 0.2rem 0.2rem;
+        border-radius: 0.5rem;
+
+        &-primary{
+            @extend .box-sm;
+            background: #353159;
+            color: white;
+        }
+    }
+    &-primary{
+        @extend .box;
+        background: #353159;
+        color: white;
+    }
+}
+
+.p{
+    &-md{
+        padding: 0.5rem 1rem;
+    }
+    &-sm{
+        padding: 0.2rem 0.4rem;
+    }
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
