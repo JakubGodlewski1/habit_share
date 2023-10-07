@@ -1,6 +1,5 @@
 /*filters*/
 import {CategoryOption, Habit} from "@/types";
-import {isThisMonth, isThisWeek} from "date-fns"
 import {convertDate} from "@/lib/convertDate";
 
 export const filterHabits = (habit:Habit, option: CategoryOption):boolean => {

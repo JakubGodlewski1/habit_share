@@ -25,9 +25,7 @@ const Page = () => {
             <TopBar multiplier={10} strike={strike} totalUserPoints={totalUserPoints}/>
             <ToggleBtns setActive={setSubpage} active={subpage === "current" ? "label1" : "label2"} label1="current" label2="all"/>
             {/*for mobile*/}
-            <div className="flex lg:hidden flex-col">
-                <HabitsAccordion habits={habits}/>
-            </div>
+                <HabitsAccordion className="flex lg:hidden flex-col" habits={habits}/>
             {/*for desktop*/}
             <div className="hidden lg:flex items-start gap-4">
                 <HabitCartsContainer habits={habits} label="today"/>

@@ -9,7 +9,12 @@ import {filterHabits} from "@/lib/filterHabits";
 type Option = "today" | "this week" | "this month";
 const options:Option[] = ["today", "this week", "this month"]
 
-const HabitsAccordion = ({habits}:{habits:Habit[]}) => {
+type Props = {
+        habits:Habit[],
+        className: string
+}
+
+const HabitsAccordion = ({habits, className}:Props) => {
 
     const [open, setOpen] = useState<Option | null>(null)
     const [heights, setHeights] = useState<{[key in Option]:number}>({today: 0, "this week": 0, "this month": 0})
@@ -17,6 +22,8 @@ const HabitsAccordion = ({habits}:{habits:Habit[]}) => {
 
     //calculate heights of divs
     useEffect(() => {
+
+        const setElementHeights = () => {
             if (contentRefs?.current?.length > 0){
                 setHeights(p=>{
                     const result = {...p}
@@ -27,12 +34,15 @@ const HabitsAccordion = ({habits}:{habits:Habit[]}) => {
                     return result
                 })
             }
+        }
+
+        window.addEventListener("resize", setElementHeights)
+        setElementHeights()
+        return ()=> window.removeEventListener("resize", setElementHeights)
     }, [habits.length]);
 
-
-
     return (
-        <div>
+        <div className={className}>
             {options.map((option, i)=> (
                 <div key={option}>
                     <button onClick={()=>setOpen( open===option ? null : option)} className="w-full flex justify-between py-1 px-2 bg-accent rounded-lg mb-2">
