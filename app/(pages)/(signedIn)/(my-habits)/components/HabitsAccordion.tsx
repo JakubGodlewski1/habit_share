@@ -43,7 +43,7 @@ const HabitsAccordion = ({habits}:{habits:Habit[]}) => {
                     </button>
                     <div style={open===option ? {height:heights[option], marginBottom:8} : {height: 0, marginBottom:0}} className="overflow-hidden transition-all">
                         <div data-title={option} ref={ref=>contentRefs.current[i]=ref!} className="flex flex-col gap-2">
-                            {!!habits.length && habits.filter(h=>filterHabits(h, option)).map(habit=><HabitCart key={habit.title} habit={habit}/>)}
+                            {!!habits.length && habits.filter(h=>filterHabits(h, option)).sort(h=>h.completedToday ? 1 : -1).map(habit=><HabitCart key={habit.title} habit={habit}/>)}
                         </div>
                     </div>
                 </div>

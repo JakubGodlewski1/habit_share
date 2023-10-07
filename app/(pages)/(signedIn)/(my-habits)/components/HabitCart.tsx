@@ -6,12 +6,12 @@ const HabitCart = ({habit}:{habit:Habit}) => {
     const {title} = habit
 
     return (
-        <div className="flex p-2 rounded-lg bg-primary gap-2">
-            <CompleteHabitBtn/>
+        <div style={{opacity: habit.completedToday ? "70%" : "100%"}} className="flex p-2 rounded-lg bg-primary gap-2">
+            <CompleteHabitBtn habit={habit}/>
                 <span className="text-accent flex-grow">{title}</span>
             <div className="flex gap-2">
-                <StatCol label="Strike" value="2 days"/>
-                <StatCol label="Score" value="232"/>
+                <StatCol label="Strike" value={`${habit.strike} ${habit.strike === 1 ? "day": "days"}`}/>
+                <StatCol label="Points" value={habit.points.toString()}/>
             </div>
         </div>
     );
