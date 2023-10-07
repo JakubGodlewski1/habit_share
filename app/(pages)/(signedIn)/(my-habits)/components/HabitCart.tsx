@@ -1,9 +1,6 @@
 import CompleteHabitBtn from "@/app/(pages)/(signedIn)/(my-habits)/components/CompleteHabitBtn";
-import StatRow from "@/app/(pages)/(signedIn)/(my-habits)/components/StatRow";
 import StatCol from "@/app/(pages)/(signedIn)/(my-habits)/components/StatCol";
-
-
-
+import {Habit} from "@/types";
 
 const HabitCart = ({habit}:{habit:Habit}) => {
     const {title} = habit

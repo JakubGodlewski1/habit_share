@@ -3,35 +3,11 @@ import HabitCart from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitCart
 import {RiArrowDownSLine} from "react-icons/ri";
 import {useEffect, useRef, useState} from "react";
 import {capitalizeWord} from "@/lib/capitalizeWord";
-import {isThisMonth, isThisWeek} from "date-fns"
+import {Habit} from "@/types";
+import {filterHabits} from "@/lib/filterHabits";
 
 type Option = "today" | "this week" | "this month";
 const options:Option[] = ["today", "this week", "this month"]
-
-/*filters*/
-const filterHabits = (habit:Habit, option: Option):boolean | undefined => {
-    const {repetitionOption} = habit
-
-    /*not completed*/
-    //to do Today (except weekly and monthly tasks)
-        if (option==="today"){
-            return !habit.completedToday && (repetitionOption.type === "specific days"  ||
-                (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "daily"))
-        }
-    //to do weekly
-        if (option=== "this week"){
-            return  repetitionOption.type === "repeat" &&
-                    repetitionOption.repeatFrequency === "weekly" &&
-                    !isThisWeek(new Date(habit.daysWhenCompleted[habit.daysWhenCompleted.length-1]), {weekStartsOn: 1})
-        }
-
-    //to do monthly
-    if (option==="this month"){
-        return  repetitionOption.type === "repeat" &&
-            repetitionOption.repeatFrequency === "monthly" &&
-            !isThisMonth(new Date(habit.daysWhenCompleted[habit.daysWhenCompleted.length-1]))
-    }
-}
 
 const HabitsAccordion = ({habits}:{habits:Habit[]}) => {
 

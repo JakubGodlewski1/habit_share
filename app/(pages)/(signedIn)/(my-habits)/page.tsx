@@ -2,7 +2,7 @@
 import TopBar from "@/app/(pages)/(signedIn)/(my-habits)/components/TopBar";
 import ToggleBtns from "@/app/(pages)/(signedIn)/(my-habits)/components/ToggleBtns";
 import HabitCartsContainer from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitCartsContainer";
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import HabitsAccordion from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitsAccordion";
 import {useUserDocSubscription} from "@/app/hooks/useUserDocSubscription";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
@@ -29,10 +29,10 @@ const Page = () => {
                 <HabitsAccordion habits={habits}/>
             </div>
             {/*for desktop*/}
-            <div className="hidden lg:flex gap-4">
-                <HabitCartsContainer label="today"/>
-                <HabitCartsContainer label="this week"/>
-                <HabitCartsContainer label="this Month"/>
+            <div className="hidden lg:flex items-start gap-4">
+                <HabitCartsContainer habits={habits} label="today"/>
+                <HabitCartsContainer habits={habits} label="this week"/>
+                <HabitCartsContainer habits={habits} label="this month"/>
             </div>
         </main>
     );

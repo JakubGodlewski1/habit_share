@@ -27,3 +27,13 @@ export type UserData = {
     friends:UserInitialData[],
     habits: Habit[]
 }
+
+export type CategoryOption = "today" | "this week" | "this month";
+
+export const getCategoryOptionFromHabit = (habit:Habit):CategoryOption => {
+    const {repetitionOption} = habit
+    if (repetitionOption.type === "specific days" || (repetitionOption.type==="repeat" && repetitionOption.repeatFrequency === "daily")) return "today"
+    else if (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "weekly") return "this week"
+    else if (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "monthly") return "this month"
+    else return "today"
+}
