@@ -44,7 +44,7 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
             {labels.map((label, i)=> (
                 <div key={label}>
                     <button onClick={()=>setOpenedElement( openedElement===label ? null : label)} className="w-full flex justify-between py-1 px-2 bg-accent rounded-lg mb-2">
-                        <h3>{capitalizeWord(label)}</h3>
+                        <h3>{capitalizeWord( label ==="daily" ? "daily/ Specific days" : label)}</h3>
                         <div className={`${openedElement===label ? "rotate-180" :""} transition-all`}>
                             <RiArrowDownSLine size={24}/>
                         </div>

@@ -1,9 +1,9 @@
 "use client"
-import {BiSolidCog} from "react-icons/bi";
+import {BiDotsVerticalRounded, BiSolidCog} from "react-icons/bi";
 import Modal from "@/app/components/Modal";
-import AddHabitForm from "@/app/(pages)/(signedIn)/(my-habits)/components/AddHabitForm";
-import {useRef, useState} from "react";
+import {useRef} from "react";
 import UpdateHabitForm from "@/app/(pages)/(signedIn)/(my-habits)/components/UpdateHabitForm";
+
 
 const UpdateHabitBtn = () => {
     const modalRef = useRef<HTMLDialogElement | null>(null)
@@ -20,16 +20,17 @@ const UpdateHabitBtn = () => {
     return (
         <>
             <Modal
+                ref={modalRef}
                 modalLabel="Update the habit"
                 closeModal={closeModal}
             >
              <UpdateHabitForm closeModal={closeModal}/>
             </Modal>
             <button
-                className="border-none hover:bg-secondary hover:scale-105 bg-inherit h-full btn w-full"
+                className="border-none hover:scale-105 hover:bg-primary bg-inherit btn p-0 m-0"
                 onClick={openModal}
             >
-                <BiSolidCog size={48}/>
+              <BiDotsVerticalRounded color="#dbd2f4" size={32}/>
             </button>
         </>
     );

@@ -17,7 +17,7 @@ const HabitCartWithCog = ({habit}:Props) => {
                     <StatCol label="Points" value={habit.points.toString()}/>
                 </div>
             </div>
-            <div className="bg-secondary flex-center overflow-hidden">
+            <div className="overflow-hidden">
                 <UpdateHabitBtn/>
             </div>
         </div>

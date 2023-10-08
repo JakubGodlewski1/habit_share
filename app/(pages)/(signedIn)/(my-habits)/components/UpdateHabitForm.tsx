@@ -2,6 +2,7 @@
 import {FormEvent,  useState} from "react";
 
 import RepetitionOptions from "@/app/(pages)/(signedIn)/(my-habits)/components/RepetitionOptions";
+import {HabitFormInputs} from "@/types";
 
 const UpdateHabitForm = ({closeModal}:{closeModal:()=>void}) => {
     const [habitFormInputs, setHabitFormInputs] = useState<HabitFormInputs>({

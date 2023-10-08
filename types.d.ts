@@ -1,11 +1,11 @@
 
 
-type HabitFormInputs = {
+export type HabitFormInputs = {
     title:string,
     repetitionOption:RepetitionOption
 }
 
-type RepetitionOption =
+export type RepetitionOption =
     {type: "repeat", repeatFrequency:  "daily" | "weekly" | "monthly"} |
     {type: "specific days", specificDaysFrequency:  ("M" | "T" | "W" | "R" | "F" | "S" | "U")[]}
 

@@ -35,9 +35,9 @@ const Page = () => {
                 <HabitsAccordion current={subpage==="current"} labels={subpage === "current" ? ["today", "this week", "this month"]:["daily", "weekly", "monthly"]} className="flex lg:hidden flex-col" habits={subpage === "current"? currentHabits : habits}/>
             {/*for desktop*/}
             <div className="hidden lg:grid grid-cols-3 items-start gap-4">
-                <HabitCartsContainer  habits={subpage === "current"? currentHabits : habits} label="today"/>
-                <HabitCartsContainer  habits={subpage === "current"? currentHabits : habits} label="this week"/>
-                <HabitCartsContainer  habits={subpage === "current"? currentHabits : habits} label="this month"/>
+                <HabitCartsContainer current={subpage==="current"}  habits={subpage === "current"? currentHabits : habits} label={subpage ==="current" ? "today": "daily"}/>
+                <HabitCartsContainer current={subpage==="current"} habits={subpage === "current"? currentHabits : habits} label={subpage ==="current" ? "this week": "weekly"}/>
+                <HabitCartsContainer current={subpage==="current"} habits={subpage === "current"? currentHabits : habits} label={subpage ==="current" ? "this month": "monthly"}/>
             </div>
         </main>
     );
