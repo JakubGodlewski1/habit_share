@@ -5,7 +5,7 @@ export const generateMultiplier = ():number =>{
 // -option4 = 160%-180% = 4%
 // - option 5= 190%-200% = 1%
 
-    //get a random nr between = and 99, if the number is:
+    //get a random nr between 0 and 99, if the number is:
     //0-64  =  option 1,
     //65-84 = option 2,
     //85-94 = option 3,

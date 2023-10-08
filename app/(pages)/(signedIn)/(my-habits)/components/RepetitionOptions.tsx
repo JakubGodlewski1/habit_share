@@ -3,6 +3,7 @@ import React, {Dispatch, SetStateAction} from 'react';
 import ToggleBtns from "@/app/(pages)/(signedIn)/(my-habits)/components/ToggleBtns";
 import MultiSelect from "@/app/(pages)/(signedIn)/(my-habits)/components/MultiSelect";
 import Dropdown from "@/app/(pages)/(signedIn)/(my-habits)/components/Dropdown";
+import {HabitFormInputs} from "@/types";
 
 
 type Props = {

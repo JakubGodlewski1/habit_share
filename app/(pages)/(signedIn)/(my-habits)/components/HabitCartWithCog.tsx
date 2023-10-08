@@ -18,7 +18,7 @@ const HabitCartWithCog = ({habit}:Props) => {
                 </div>
             </div>
             <div className="overflow-hidden">
-                <UpdateHabitBtn/>
+                <UpdateHabitBtn habit={habit}/>
             </div>
         </div>
     );

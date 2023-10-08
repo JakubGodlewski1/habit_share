@@ -4,6 +4,7 @@ import {addDoc, doc, setDoc, collection, updateDoc, onSnapshot} from "firebase/f
 import {db} from "@/app/utils/firebase/config";
 import {getDoc} from "@firebase/firestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
+import {UserData} from "@/types";
 
 
 export const useFirestore = (collectionName:"users") => {
@@ -30,6 +31,7 @@ export const useFirestore = (collectionName:"users") => {
     }
 
     const updateDocument = async (docId: string, update:object) => {
+        let error = null;
         setError(null)
         setIsPending(true)
         try {
@@ -37,10 +39,13 @@ export const useFirestore = (collectionName:"users") => {
             await updateDoc(docRef, update)
             setIsPending(false)
         }catch (err:any){
+            error=err.message
             console.error(err.message)
             setError(err.message)
             setIsPending(false)
         }
+
+        return {error}
     }
 
     const getDocument = async (docId:string) => {
