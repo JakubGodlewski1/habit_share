@@ -32,7 +32,7 @@ const Page = () => {
             <TopBar multiplier={10} strike={strike} totalUserPoints={calculateTotalUserPoints(habits)}/>
             <ToggleBtns setActive={setSubpage} active={subpage === "current" ? "label1" : "label2"} label1="current" label2="all"/>
             {/*for mobile*/}
-                <HabitsAccordion className="flex lg:hidden flex-col" habits={subpage === "current"? currentHabits : habits}/>
+                <HabitsAccordion current={subpage==="current"} labels={subpage === "current" ? ["today", "this week", "this month"]:["daily", "weekly", "monthly"]} className="flex lg:hidden flex-col" habits={subpage === "current"? currentHabits : habits}/>
             {/*for desktop*/}
             <div className="hidden lg:grid grid-cols-3 items-start gap-4">
                 <HabitCartsContainer  habits={subpage === "current"? currentHabits : habits} label="today"/>
