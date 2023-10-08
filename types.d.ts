@@ -28,7 +28,7 @@ export type UserData = {
     habits: Habit[]
 }
 
-export type CategoryOption = "today" | "this week" | "this month";
+export type CategoryOption = "today" | "this week" | "this month" | "daily" | "weekly" | "monthly";
 
 export const getCategoryOptionFromHabit = (habit:Habit):CategoryOption => {
     const {repetitionOption} = habit

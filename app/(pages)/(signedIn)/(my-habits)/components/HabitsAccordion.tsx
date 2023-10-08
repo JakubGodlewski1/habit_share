@@ -11,7 +11,7 @@ const options:Option[] = ["today", "this week", "this month"]
 
 type Props = {
         habits:Habit[],
-        className: string
+        className: string,
 }
 
 const HabitsAccordion = ({habits, className}:Props) => {
@@ -22,7 +22,6 @@ const HabitsAccordion = ({habits, className}:Props) => {
 
     //calculate heights of divs
     useEffect(() => {
-
         const setElementHeights = () => {
             if (contentRefs?.current?.length > 0){
                 setHeights(p=>{
