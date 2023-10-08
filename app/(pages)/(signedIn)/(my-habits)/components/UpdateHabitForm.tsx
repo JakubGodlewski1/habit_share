@@ -20,10 +20,12 @@ const UpdateHabitForm = ({closeModal, habit, resetState}:Props) => {
     }
 
     const {user, userData} = useAuthContext()
-    const {updateDocument, error } = useFirestore("users")
+    const {updateDocument, error, isPending } = useFirestore("users")
     const [habitFormInputs, setHabitFormInputs] = useState<HabitFormInputs>(initialHabitFormInputs)
+    const [currentAction, setCurrentAction] = useState<null | "deleting" | "updating">(null)
 
     const updateHabit = async () => {
+        setCurrentAction("updating")
         const {error} = await updateDocument(user?.uid!, {habits: userData?.habits.map(h=>h.title!==habit.title ?
                 h
                 :
@@ -34,6 +36,7 @@ const UpdateHabitForm = ({closeModal, habit, resetState}:Props) => {
     }
 
     const deleteHabit = async () => {
+        setCurrentAction("deleting")
         const {error} = await updateDocument(user?.uid!, {habits: userData?.habits.filter(h=>h.title !== habit.title)})
         if (!error) {
             closeModal()
@@ -59,8 +62,18 @@ const UpdateHabitForm = ({closeModal, habit, resetState}:Props) => {
             </label>
             <RepetitionOptions setHabitFormInputs={setHabitFormInputs} habitFormInputs={habitFormInputs}/>
             <div className="join mt-auto">
-                <button onClick={updateHabit} className="join-item btn btn-primary">update habit</button>
-                <button onClick={deleteHabit} className="join-item btn btn-error">Delete habit</button>
+                <button
+                    disabled={isPending && currentAction === "updating"}
+                    onClick={updateHabit} className="join-item btn btn-primary">
+                    {isPending && currentAction === "updating" ? "Updating...": "Update habit"}
+                </button>
+                <button
+
+                    disabled={isPending && currentAction === "deleting"}
+                    onClick={deleteHabit}
+                    className="join-item btn btn-error">
+                    {isPending && currentAction === "deleting" ? "Deleting...": "Delete habit"}
+                </button>
             </div>
             {error && <span>{error}</span>}
         </form>

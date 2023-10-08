@@ -28,7 +28,7 @@ const Dropdown = ({allOptions, selectedOption, setSelectedOption}:Props) => {
                 <Details>
                     <summary onClick={()=>setDropdownOpen(true)}>{selectedOption}</summary>
                     {allOptions.filter(o=>o!==selectedOption).map(op=>(
-                        <li onClick={()=>handleOptionClick(op)} key={op}><button className="w-full">{op}</button></li>
+                        <li onClick={()=>handleOptionClick(op)} key={op}><button type="button" className="w-full">{op}</button></li>
                     ))}
                 </Details>
             </li>

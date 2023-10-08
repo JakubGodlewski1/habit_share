@@ -6,6 +6,7 @@ import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {convertDate} from "@/lib/convertDate";
 import {calculateRepetitionDates} from "@/lib/calculateRepetitionDates";
+import {Habit, HabitFormInputs} from "@/types";
 
 const initialHabitFormInputsState:HabitFormInputs = {
     title:"",
@@ -58,7 +59,10 @@ const AddHabitForm = ({closeModal, modalOpen}:Props) => {
     }
 
     return (
-        <form onSubmit={e=>e.preventDefault()} className="standard-form h-[70vh] max-h-[550px] min-h-[345px]">
+        <form onSubmit={e=> {
+            e.preventDefault()
+            addHabit()
+        }} className="standard-form h-[70vh] max-h-[550px] min-h-[345px]">
             <label>
                 <span>Title</span>
                 <input
@@ -75,7 +79,7 @@ const AddHabitForm = ({closeModal, modalOpen}:Props) => {
                <RepetitionOptions setHabitFormInputs={setHabitFormInputs} habitFormInputs={habitFormInputs}/>
             {error && <span className="alert-error alert">{error}</span>}
             {formError && <span className="alert-error alert">{formError}</span>}
-            <button disabled={isPending} onClick={()=>addHabit()} className="btn btn-primary mt-auto">{isPending ? "Adding..." : "Add Habit"}</button>
+            <button disabled={isPending} className="btn btn-primary mt-auto">{isPending ? "Adding..." : "Add Habit"}</button>
         </form>
     );
 };

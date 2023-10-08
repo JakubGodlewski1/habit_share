@@ -12,6 +12,7 @@ const MultiSelect = ({allElements, activeElements, setActiveElements }:Props) =>
         <div className="join">
             {allElements && allElements.map(el=>
                 <button
+                    type="button"
                     onClick={()=>setActiveElements(el)}
                     key={el}
                     className={`join-item btn flex-grow ${activeElements.includes(el) ? activeStyle : inactiveStyle}`}>

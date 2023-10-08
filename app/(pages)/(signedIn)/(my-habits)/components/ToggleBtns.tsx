@@ -17,8 +17,8 @@ const ToggleBtns = ({label1, label2, small=false, active, setActive}:Props) => {
 
     return (
             <div className="join flex">
-                <button onClick={()=>setActive(label1)} className={`hover:scale-[1.02] join-item btn flex-grow ${active==='label1' ? activeStyle : inactiveStyle} ${small && "btn-sm"}`}>{capitalizeWord(label1)}</button>
-                <button  onClick={()=>setActive(label2)} className={`hover:scale-[1.02] join-item btn flex-grow ${active==='label2' ? activeStyle : inactiveStyle} ${small && "btn-sm"}`}>{capitalizeWord(label2)}</button>
+                <button type="button" onClick={()=>setActive(label1)} className={`hover:scale-[1.02] join-item btn flex-grow ${active==='label1' ? activeStyle : inactiveStyle} ${small && "btn-sm"}`}>{capitalizeWord(label1)}</button>
+                <button type="button"  onClick={()=>setActive(label2)} className={`hover:scale-[1.02] join-item btn flex-grow ${active==='label2' ? activeStyle : inactiveStyle} ${small && "btn-sm"}`}>{capitalizeWord(label2)}</button>
             </div>
     );
 };
