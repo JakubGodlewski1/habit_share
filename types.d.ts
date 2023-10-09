@@ -25,7 +25,8 @@ export type UserData = {
     strike: number,
     displayName: string,
     friends:UserInitialData[],
-    habits: Habit[]
+    habits: Habit[],
+    todaysMultiplier: number | null
 }
 
 export type CategoryOption = "today" | "this week" | "this month" | "daily" | "weekly" | "monthly";

@@ -4,7 +4,7 @@ import AddHabitBtn from "@/app/(pages)/(signedIn)/(my-habits)/components/AddHabi
 import StatCol from "@/app/(pages)/(signedIn)/(my-habits)/components/StatCol";
 
 type Props = {
-    multiplier: number,
+    multiplier: number | null,
     strike: number,
     totalUserPoints: number
 }

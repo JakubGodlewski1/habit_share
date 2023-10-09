@@ -2,6 +2,7 @@ import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {GoogleAuthProvider, signInWithPopup} from "@firebase/auth";
 import {auth} from "@/app/utils/firebase/config";
 import {useFirestore} from "@/app/hooks/useFirestore";
+import {UserData} from "@/types";
 
 
 export const useGoogleAuth = () => {
@@ -26,7 +27,8 @@ export const useGoogleAuth = () => {
                         strike:0,
                         displayName: user.email || "user name",
                         friends:[],
-                        habits: []
+                        habits: [],
+                        todaysMultiplier: null
                     }
                     await addDocument(userInitialData, user.uid)
                     updateUserData(userInitialData)

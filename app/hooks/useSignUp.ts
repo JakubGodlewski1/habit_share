@@ -5,6 +5,7 @@ import {createUserWithEmailAndPassword, updateProfile} from "@firebase/auth";
 import {auth} from "@/app/utils/firebase/config";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
+import {UserData} from "@/types";
 
 const getErrorsAndMessagesFromZod = (zodErrorObj:ZodError) => {
     return zodErrorObj.errors.map(err=>{
@@ -69,7 +70,9 @@ export const useSignUp = () => {
                 strike:0,
                 displayName:name,
                 friends:[],
-                habits: []
+                habits: [],
+                todaysMultiplier: null
+
             }
             await addDocument(userInitialData, user.uid)
             updateUserData(userInitialData)
