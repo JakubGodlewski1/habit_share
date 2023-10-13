@@ -1,11 +1,12 @@
 "use client"
 import HabitCart from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitCart";
 import {RiArrowDownSLine} from "react-icons/ri";
-import {useLayoutEffect, useRef, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {capitalizeWord} from "@/lib/capitalizeWord";
 import {AllCategoryLabel, CurrentCategoryLabel, Habit} from "@/types";
 import {filterHabits} from "@/lib/filterHabits";
 import HabitCartWithCog from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitCartWithCog";
+import {cloneDeep, isEqual} from "lodash"
 
 type Props = {
         habits:Habit[],
@@ -18,33 +19,50 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
     const [openedElement, setOpenedElement] = useState<CurrentCategoryLabel | AllCategoryLabel | null>(null)
     const [heights, setHeights] = useState<{[key in string]:number}>({[labels[0]]: 0, [labels[1]]: 0, [labels[2]]: 0})
     const contentRefs = useRef<HTMLDivElement[]>([])
+    const [prevHabits, setPrevHabits] = useState(cloneDeep(habits))
 
-    //calculate heights of divs
-    useLayoutEffect(() => {
-        const setElementHeights = () => {
-            if (contentRefs?.current?.length > 0){
-                setHeights(p=>{
-                    const result = {...p}
-                    contentRefs.current.forEach(contentEl=> {
-                        const title = contentEl.dataset.title as CurrentCategoryLabel | AllCategoryLabel
-                        result[title] = contentEl.offsetHeight
-                    })
-                    return result
+    const setElementHeights = () => {
+        const refs = contentRefs?.current?.filter(c=>c!==null)
+        if (refs.length > 0){
+            setHeights(p=>{
+                const result = {...p}
+                refs.forEach(contentEl=> {
+                    const title = contentEl.dataset.title as CurrentCategoryLabel | AllCategoryLabel
+                    result[title] = contentEl.offsetHeight
                 })
-            }
+                return result
+            })
         }
+    }
 
+   /*calculate heights of divs*/
+    if (!isEqual(habits, prevHabits)){
+        //I use set timeout so the function fires "on the second render", when the jsx is already rendered
+        setTimeout(()=>{
+            setElementHeights()
+            setPrevHabits(habits)
+        }, 0)
+    }
+
+    //calculate heights when size of screen changes
+    useEffect(() => {
         window.addEventListener("resize", setElementHeights)
         setElementHeights()
         return ()=> window.removeEventListener("resize", setElementHeights)
-    }, [habits.length]);
+    }, []);
+
+    //calculate heights when number of habits changes or subpage changes
+    useEffect(() => {
+        setElementHeights()
+    }, [contentRefs?.current?.length, current]);
+
 
     return (
         <div className={className}>
             {labels.map((label, i)=> (
                 <div key={label}>
                     <button onClick={()=>setOpenedElement( openedElement===label ? null : label)} className="w-full flex justify-between py-1 px-2 bg-accent rounded-lg mb-2">
-                        <h3>{capitalizeWord( label ==="daily" ? "daily/ Specific days" : label)}</h3>
+                        <h3>{capitalizeWord(label)}</h3>
                         <div className={`${openedElement===label ? "rotate-180" :""} transition-all`}>
                             <RiArrowDownSLine size={24}/>
                         </div>
