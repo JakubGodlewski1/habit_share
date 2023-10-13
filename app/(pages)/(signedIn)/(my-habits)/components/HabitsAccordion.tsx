@@ -3,19 +3,19 @@ import HabitCart from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitCart
 import {RiArrowDownSLine} from "react-icons/ri";
 import {useLayoutEffect, useRef, useState} from "react";
 import {capitalizeWord} from "@/lib/capitalizeWord";
-import {AllCategoryOption, CurrentCategoryOption, Habit} from "@/types";
+import {AllCategoryLabel, CurrentCategoryLabel, Habit} from "@/types";
 import {filterHabits} from "@/lib/filterHabits";
 import HabitCartWithCog from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitCartWithCog";
 
 type Props = {
         habits:Habit[],
         className: string,
-        labels: CurrentCategoryOption[] | AllCategoryOption[],
+        labels: CurrentCategoryLabel[] | AllCategoryLabel[],
         current:boolean
 }
 
 const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
-    const [openedElement, setOpenedElement] = useState<CurrentCategoryOption | AllCategoryOption | null>(null)
+    const [openedElement, setOpenedElement] = useState<CurrentCategoryLabel | AllCategoryLabel | null>(null)
     const [heights, setHeights] = useState<{[key in string]:number}>({[labels[0]]: 0, [labels[1]]: 0, [labels[2]]: 0})
     const contentRefs = useRef<HTMLDivElement[]>([])
 
@@ -26,7 +26,7 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
                 setHeights(p=>{
                     const result = {...p}
                     contentRefs.current.forEach(contentEl=> {
-                        const title = contentEl.dataset.title as CurrentCategoryOption | AllCategoryOption
+                        const title = contentEl.dataset.title as CurrentCategoryLabel | AllCategoryLabel
                         result[title] = contentEl.offsetHeight
                     })
                     return result
@@ -51,7 +51,7 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
                     </button>
                     <div style={openedElement===label ? {height:heights[label], marginBottom:8} : {height: 0, marginBottom:0}} className="overflow-hidden transition-all">
                         <div data-title={label} ref={ref=>contentRefs.current[i]=ref!} className="flex flex-col gap-2">
-                            {!!habits.length && habits.filter(h=>filterHabits(h, label)).sort(h=>h.completedToday ? 1 : -1).map(habit=>
+                            {!!habits.length && habits.filter(h=>filterHabits({habit:h,option:label})).sort(h=>h.completedToday ? 1 : -1).map(habit=>
                                 current ? <HabitCart key={habit.title} habit={habit}/> : <HabitCartWithCog habit={habit} key={habit.title}/>)}
                         </div>
                     </div>

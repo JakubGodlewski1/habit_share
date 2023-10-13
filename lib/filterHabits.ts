@@ -1,78 +1,73 @@
 /*filters*/
-import {CategoryOption, Habit} from "@/types";
+import {AllCategoryLabel, CurrentCategoryLabel, Habit} from "@/types";
+import {convertDate} from "@/lib/convertDate";
+import {isThisMonth, isThisWeek} from "date-fns";
 
-export const filterHabits = (habit:Habit, option: CategoryOption):boolean => {
-    const {repetitionOption} = habit
-
-    //to do Today (except weekly and monthly tasks)
-    if (option==="today" || option==="daily"){
-      return (repetitionOption.type === "specific days"  || (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "daily"))
-
-    }
-    //to do weekly
-   else if (option=== "this week" || option==="weekly")return repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "weekly"
-
-    //to do monthly
-    else if (option==="this month" || option === "monthly")return  repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "monthly"
-
-    else return false
+// not done or done today
+const today = (habit:Habit):boolean => {
+    const {repetitionOption, repetitionDates} = habit
+    return (
+            repetitionDates.includes(convertDate(new Date())) && (
+                repetitionOption.type === "specific days"  ||
+                (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "daily"))
+    )
 }
 
-// /*filters*/
-// import {FilterOption, Habit} from "@/types";
-// import {convertDate} from "@/lib/convertDate";
-//
-// const today = (habit:Habit, completed?: boolean):boolean => {
-//     const {repetitionOption, repetitionDates, completedToday} = habit
-//     return (
-//         completed ? completedToday : completed === undefined ? true : !completedToday &&
-//             repetitionDates.includes(convertDate(new Date())) && (
-//                 repetitionOption.type === "specific days"  ||
-//                 (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "daily"))
-//     )
-// }
-//
-// const daily = (habit:Habit, completed?: boolean):boolean => {
-//     const {repetitionOption, completedToday} = habit
-//     return (
-//         completed ? completedToday : completed === undefined ? true : !completedToday &&
-//             repetitionOption.type === "repeat" &&
-//             repetitionOption.repeatFrequency === "daily")
-// }
-//
-// const weekly = (habit:Habit, completed?: boolean):boolean => {
-//     const {repetitionOption, completedToday} = habit
-//     return (
-//         completed ? completedToday : completed === undefined ? true : !completedToday &&
-//             repetitionOption.type === "repeat" &&
-//             repetitionOption.repeatFrequency === "weekly")
-// }
-// const monthly = (habit:Habit, completed?: boolean):boolean => {
-//     const {repetitionOption, completedToday} = habit
-//     return (
-//         completed ? completedToday : completed === undefined ? true : !completedToday &&
-//             repetitionOption.type === "repeat" &&
-//             repetitionOption.repeatFrequency === "monthly")
-// }
-//
-// const specificDays = (habit:Habit, completed?: boolean):boolean => {
-//     const {repetitionOption, completedToday} = habit
-//     return (
-//         completed ? completedToday : completed === undefined ? true : !completedToday &&
-//             repetitionOption.type === "specific days"
-//     )
-// }
-//
-//
-// export const filterHabits = ({habit, option, completed}:{habit: Habit, option: FilterOption, completed?: boolean}):boolean => {
-//
-//     const options = {
-//         today: today(habit, completed),
-//         daily: daily(habit, completed),
-//         weekly: weekly(habit, completed),
-//         monthly:monthly(habit, completed),
-//         "specific days":specificDays(habit, completed)
-//     }
-//
-//     return options[option]
-// }
+const thisWeek = (habit:Habit)=>{
+    const {repetitionOption, completedToday, daysWhenCompleted} = habit
+    return (
+        repetitionOption.type === "repeat" &&
+        repetitionOption.repeatFrequency === "weekly" &&
+        (completedToday || !daysWhenCompleted.some(date=>isThisWeek(new Date(date))))
+    )
+}
+
+const thisMonth = (habit:Habit)=> {
+    const {repetitionOption, completedToday, daysWhenCompleted} = habit
+    return (
+        repetitionOption.type === "repeat" &&
+        repetitionOption.repeatFrequency === "monthly" &&
+        (completedToday || !daysWhenCompleted.some(date=>isThisMonth(new Date(date))))
+    )
+}
+
+//all
+const daily = (habit:Habit):boolean => {
+    const {repetitionOption} = habit
+    return (
+            repetitionOption.type === "repeat" &&
+            repetitionOption.repeatFrequency === "daily")
+}
+
+const weekly = (habit:Habit):boolean => {
+    const {repetitionOption} = habit
+    return (
+            repetitionOption.type === "repeat" &&
+            repetitionOption.repeatFrequency === "weekly")
+}
+const monthly = (habit:Habit):boolean => {
+    const {repetitionOption} = habit
+    return (
+            repetitionOption.type === "repeat" &&
+            repetitionOption.repeatFrequency === "monthly")
+}
+
+const specificDays = (habit:Habit, completed?: boolean):boolean => {
+    return habit.repetitionOption.type === "specific days"
+}
+
+
+export const filterHabits = ({habit, option}:{habit: Habit, option: AllCategoryLabel | CurrentCategoryLabel}):boolean => {
+
+    const options = {
+        today: today(habit),
+        "this week": thisWeek(habit),
+        "this month": thisMonth(habit),
+        daily: daily(habit),
+        weekly: weekly(habit),
+        monthly:monthly(habit),
+        "specific days":specificDays(habit)
+    }
+
+    return options[option]
+}

@@ -16,7 +16,7 @@ type Props = {
 const TodaysMultiplier = ({multiplier}:Props) => {
     const {userData, user} = useAuthContext()
     const {updateDocument} = useFirestore("users")
-    const useEffectDep = userData!.habits.filter(h=>filterHabits(h, "daily")).map(el=>el.completedToday).filter(l=>l).length
+    const useEffectDep = userData!.habits.filter(h=>filterHabits({habit:h, option:"today"})).map(el=>el.completedToday).filter(l=>l).length
 
     //if all habits scheduled for today has been completed, calculate and show today's multiplier to the user
     //also handle multiplying user's points with the multiplier
