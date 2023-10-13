@@ -29,9 +29,8 @@ export type UserData = {
     todaysMultiplier: number | null
 }
 
-export type CategoryOption = "today" | "this week" | "this month" | "daily" | "weekly" | "monthly";
-export type AllCategoryOption =  "daily" | "weekly" | "monthly";
-export type CurrentCategoryOption = "today" | "this week" | "this month";
+export type AllCategoryLabel =  "daily" | "weekly" | "monthly" | "specific days";
+export type CurrentCategoryLabel = "today" | "this week" | "this month";
 
 export const getCategoryOptionFromHabit = (habit:Habit):CategoryOption => {
     const {repetitionOption} = habit

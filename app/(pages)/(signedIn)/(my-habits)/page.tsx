@@ -7,8 +7,11 @@ import HabitsAccordion from "@/app/(pages)/(signedIn)/(my-habits)/components/Hab
 import {useUserDocSubscription} from "@/app/hooks/useUserDocSubscription";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {calculateTotalUserPoints} from "@/lib/calculateTotalUserPoints";
-import {Habit} from "@/types";
+import {AllCategoryLabel, CurrentCategoryLabel, Habit} from "@/types";
 import {getCurrentHabits} from "@/lib/getCurrentHabits";
+
+const allCategoryLabels:AllCategoryLabel[] = ["daily", "weekly", "monthly", "specific days"]
+const currentCategoryLabels:CurrentCategoryLabel[] = ["today", "this week", "this month"]
 
 const Page = () => {
     //states
@@ -34,10 +37,15 @@ const Page = () => {
             {/*for mobile*/}
                 <HabitsAccordion current={subpage==="current"} labels={subpage === "current" ? ["today", "this week", "this month"]:["daily", "weekly", "monthly"]} className="flex lg:hidden flex-col" habits={subpage === "current"? currentHabits : habits}/>
             {/*for desktop*/}
-            <div className="hidden lg:grid grid-cols-3 items-start gap-4">
-                <HabitCartsContainer current={subpage==="current"}  habits={subpage === "current"? currentHabits : habits} label={subpage ==="current" ? "today": "daily"}/>
-                <HabitCartsContainer current={subpage==="current"} habits={subpage === "current"? currentHabits : habits} label={subpage ==="current" ? "this week": "weekly"}/>
-                <HabitCartsContainer current={subpage==="current"} habits={subpage === "current"? currentHabits : habits} label={subpage ==="current" ? "this month": "monthly"}/>
+            <div style={{gridTemplateColumns:subpage==="current" ? "1fr 1fr 1fr":"1fr 1fr"}} className="hidden lg:grid grid-cols-3 items-start gap-4">
+                {//all
+                    subpage ==="all" && allCategoryLabels.map(label=>(
+                    <HabitCartsContainer key={label} current={false}  habits={habits} label={label}/>
+                ))}
+                {//current
+                    subpage === "current" && currentCategoryLabels.map(label=>(
+                        <HabitCartsContainer key={label} current={true}  habits={currentHabits} label={label}/>
+                    ))}
             </div>
         </main>
     );
