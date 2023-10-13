@@ -5,6 +5,7 @@ import RepetitionOptions from "@/app/(pages)/(signedIn)/(my-habits)/components/R
 import {Habit, HabitFormInputs} from "@/types";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
+import {calculateRepetitionDates} from "@/lib/calculateRepetitionDates";
 
 type Props = {
     closeModal:()=>void,
@@ -26,10 +27,19 @@ const UpdateHabitForm = ({closeModal, habit, resetState}:Props) => {
 
     const updateHabit = async () => {
         setCurrentAction("updating")
+        const {title, repetitionOption} = habitFormInputs
         const {error} = await updateDocument(user?.uid!, {habits: userData?.habits.map(h=>h.title!==habit.title ?
                 h
                 :
-                {...h, title: habitFormInputs.title, repetitionOption: habitFormInputs.repetitionOption})})
+                //updated habit
+                {...h,
+                    title,
+                    repetitionOption,
+                    repetitionDates: calculateRepetitionDates(
+                        repetitionOption.type === "specific days" ? repetitionOption.specificDaysFrequency : repetitionOption.repeatFrequency
+                    )
+                } as Habit
+            )})
         if (!error) {
             closeModal()
         }
