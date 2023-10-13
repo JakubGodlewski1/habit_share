@@ -16,7 +16,7 @@ type Props = {
 }
 
 const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
-    const [openedElement, setOpenedElement] = useState<CurrentCategoryLabel | AllCategoryLabel | null>(null)
+    const [openedElement, setOpenedElement] = useState<CurrentCategoryLabel | AllCategoryLabel | null>("today")
     const [heights, setHeights] = useState<{[key in string]:number}>({[labels[0]]: 0, [labels[1]]: 0, [labels[2]]: 0})
     const contentRefs = useRef<HTMLDivElement[]>([])
     const [prevHabits, setPrevHabits] = useState(cloneDeep(habits))
@@ -62,7 +62,12 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
             {labels.map((label, i)=> (
                 <div key={label}>
                     <button onClick={()=>setOpenedElement( openedElement===label ? null : label)} className="w-full flex justify-between py-1 px-2 bg-accent rounded-lg mb-2">
-                        <h3>{capitalizeWord(label)}</h3>
+                        <div className="flex gap-2 items-center">
+                            <h3>{capitalizeWord(label)}</h3>
+                            <span className="bg-primary w-[22px] h-[22px] flex-center rounded-full text-white text-sm">
+                                {habits.filter(h=>filterHabits({habit:h,option:label})).length}
+                            </span>
+                        </div>
                         <div className={`${openedElement===label ? "rotate-180" :""} transition-all`}>
                             <RiArrowDownSLine size={24}/>
                         </div>
