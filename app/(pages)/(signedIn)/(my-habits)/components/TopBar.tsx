@@ -15,7 +15,7 @@ const TopBar = ({multiplier, totalUserPoints, strike}:Props) => {
         <div className="flex justify-between">
                 <TodaysMultiplier multiplier={multiplier}/>
             <div className="hidden md:flex gap-2">
-                <StatRow  label="Strike" value={`${strike} days`}/>
+                <StatRow  label="Strike" value={`${strike} ${strike === 1 ? "day" : "days"}`}/>
                 <StatRow label="Points" value={`${totalUserPoints}`}/>
             </div>
             <div className="flex md:hidden gap-2">

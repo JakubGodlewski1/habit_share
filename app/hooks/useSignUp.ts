@@ -71,7 +71,8 @@ export const useSignUp = () => {
                 displayName:name,
                 friends:[],
                 habits: [],
-                todaysMultiplier: null
+                todaysMultiplier: null,
+                strikeHasBeenUpdatedToday:false
 
             }
             await addDocument(userInitialData, user.uid)

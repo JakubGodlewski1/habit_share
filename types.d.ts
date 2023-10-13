@@ -23,6 +23,7 @@ export type Habit = {
 export type UserData = {
     email: string,
     strike: number,
+    strikeHasBeenUpdatedToday: boolean,
     displayName: string,
     friends:UserInitialData[],
     habits: Habit[],

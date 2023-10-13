@@ -28,7 +28,8 @@ export const useGoogleAuth = () => {
                         displayName: user.email || "user name",
                         friends:[],
                         habits: [],
-                        todaysMultiplier: null
+                        todaysMultiplier: null,
+                        strikeHasBeenUpdatedToday: false
                     }
                     await addDocument(userInitialData, user.uid)
                     updateUserData(userInitialData)

@@ -5,10 +5,13 @@ import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {convertDate} from "@/lib/convertDate";
 import {calculateDailyPointsToAdd, calculateDailyPointsToRemove} from "@/lib/calculatePoints";
+import {useGlobalUpdates} from "@/app/hooks/GlobalUpdates/useGlobalUpdates";
 
 const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
     const {updateDocument} = useFirestore("users")
     const {user, userData} = useAuthContext()
+
+    useGlobalUpdates(userData!, user!)
 
     const handleHabitToggle = (e: ChangeEvent<HTMLInputElement>) => {
         const updatedHabits = userData?.habits.map(h=>h.title!==habit.title ? h :
@@ -32,7 +35,6 @@ const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
     )!
         updateDocument(user?.uid!, {habits: updatedHabits})
     }
-
 
 
     return (

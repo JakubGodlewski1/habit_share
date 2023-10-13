@@ -56,7 +56,6 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
         setElementHeights()
     }, [contentRefs?.current?.length, current]);
 
-
     return (
         <div className={className}>
             {labels.map((label, i)=> (
@@ -64,9 +63,12 @@ const HabitsAccordion = ({habits, className, labels, current=false}:Props) => {
                     <button onClick={()=>setOpenedElement( openedElement===label ? null : label)} className="w-full flex justify-between py-1 px-2 bg-accent rounded-lg mb-2">
                         <div className="flex gap-2 items-center">
                             <h3>{capitalizeWord(label)}</h3>
-                            <span className="bg-primary w-[22px] h-[22px] flex-center rounded-full text-white text-sm">
-                                {habits.filter(h=>filterHabits({habit:h,option:label})).length}
+                            {current &&
+                                <span className="bg-primary w-[22px] h-[22px] flex-center rounded-full text-white text-sm">
+                                {habits.filter(h=>!h.completedToday && filterHabits({habit:h,option:label})).length}
                             </span>
+                            }
+
                         </div>
                         <div className={`${openedElement===label ? "rotate-180" :""} transition-all`}>
                             <RiArrowDownSLine size={24}/>
