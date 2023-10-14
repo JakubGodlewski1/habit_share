@@ -23,11 +23,15 @@ export type Habit = {
 export type UserData = {
     email: string,
     strike: number,
-    strikeHasBeenUpdatedToday: boolean,
     displayName: string,
     friends:UserInitialData[],
     habits: Habit[],
-    todaysMultiplier: number | null
+    multiplier: number | null,
+    points:number,
+    dailyUpdates: {
+        strike: boolean,
+        points:boolean
+    }
 }
 
 export type AllCategoryLabel =  "daily" | "weekly" | "monthly" | "specific days";

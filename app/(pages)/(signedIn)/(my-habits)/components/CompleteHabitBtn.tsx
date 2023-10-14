@@ -33,7 +33,12 @@ const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
                     completedToday: false
                 }
     )!
-        updateDocument(user?.uid!, {habits: updatedHabits})
+        updateDocument(user?.uid!, {
+            habits: updatedHabits,
+            points: e.target.checked ?
+                calculateDailyPointsToAdd(habit.strike+1, userData!.points) :
+                calculateDailyPointsToRemove(habit.strike, userData!.points)
+        })
     }
 
 

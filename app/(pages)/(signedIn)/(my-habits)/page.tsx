@@ -32,7 +32,7 @@ const Page = () => {
 
     return (
         <main className="flex flex-col gap-4">
-            <TopBar multiplier={userData!.todaysMultiplier} strike={strike} totalUserPoints={calculateTotalUserPoints(habits)}/>
+            <TopBar multiplier={userData!.multiplier} strike={strike} totalUserPoints={userData!.points}/>
             <ToggleBtns setActive={setSubpage} active={subpage === "current" ? "label1" : "label2"} label1="current" label2="all"/>
             {/*for mobile*/}
                 <HabitsAccordion current={subpage==="current"} labels={subpage === "current" ? ["today", "this week", "this month"]:["daily", "weekly", "monthly", "specific days"]} className="flex lg:hidden flex-col" habits={subpage === "current"? currentHabits : habits}/>

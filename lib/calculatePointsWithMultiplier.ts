@@ -3,5 +3,5 @@
 
 type Props = {multiplier: number, todaysPoints:number, globalStrike:number}
 export const calculatePointsWithMultiplier = ({multiplier, todaysPoints, globalStrike}:Props) =>{
- return Math.floor(todaysPoints*multiplier/100 + globalStrike)
+ return Math.floor(todaysPoints*(multiplier/100) + globalStrike)
 }
