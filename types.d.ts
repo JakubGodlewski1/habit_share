@@ -26,7 +26,7 @@ export type UserData = {
     displayName: string,
     friends:UserInitialData[],
     habits: Habit[],
-    multiplier: number | null,
+    multiplier: number,
     points:number,
     dailyUpdates: {
         strike: boolean,

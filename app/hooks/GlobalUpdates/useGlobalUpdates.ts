@@ -4,76 +4,62 @@ import {useFirestore} from "@/app/hooks/useFirestore";
 import {filterHabits} from "@/lib/filterHabits";
 import {useEffect} from "react";
 import {todaysHabits} from "@/lib/todaysHabits";
-import {generateMultiplier} from "@/lib/generateMultiplier";
-import {calculateTotalUserPoints} from "@/lib/calculateTotalUserPoints";
 import {calculatePointsWithMultiplier} from "@/lib/calculatePointsWithMultiplier";
+import {calculateDailyPoints} from "@/lib/calculatePoints";
+
 
 export const useGlobalUpdates = (userData:UserData, user:User)=>{
+    const {habits, dailyUpdates, multiplier, strike, points} = userData
     const {updateDocument} = useFirestore("users")
     const todaysUndoneHabits =  todaysHabits({userData, completed: false})
     const todaysAllHabits =  userData.habits.filter(habit=>filterHabits({habit, option:"today"}))
-
-   /* update global strike*/
+    //calculate all points of today's habits AS IF they were already completed
+    let totalUserTodaysPoints = 0
+    todaysAllHabits.forEach(h=>{
+        //if habit is completed
+        if (h.completedToday)totalUserTodaysPoints+=h.points
+        //if habit is not completed
+        if (!h.completedToday)totalUserTodaysPoints+=h.points + calculateDailyPoints(h.strike+1)
+    })
 
     useEffect(() => {
-        if (todaysUndoneHabits.length===0 && !userData.dailyUpdates.strike && userData.habits.length > 0){
-            updateDocument(user.uid, {dailyUpdates:{strike:true, points:userData.dailyUpdates.points}, strike: userData.strike+1} as UserData)
+        //when user completes all today's habits, update global strike and points
+
+        if (
+            todaysUndoneHabits.length===0 &&
+            todaysAllHabits.length > 0 &&
+            !dailyUpdates.strike &&
+            !dailyUpdates.points
+        ){
+            updateDocument(user.uid, {
+               dailyUpdates:{points:true, strike:true},
+               strike:strike+1,
+               points: points + calculatePointsWithMultiplier({
+                   multiplier,
+                   todaysPoints:totalUserTodaysPoints,
+                   globalStrike:strike+1
+               })
+            } as UserData)
         }
-        if (todaysUndoneHabits.length===1 && userData.dailyUpdates.strike){
-            updateDocument(user.uid, {strike: userData.strike-1, dailyUpdates:{strike:false, points:userData.dailyUpdates.points}} as UserData)
+
+        //if user has completed all the today's habits and later deselected something, calculate the points and strike back
+
+        if (
+            todaysUndoneHabits.length===1 &&
+            dailyUpdates.strike &&
+            dailyUpdates.points
+        ){
+            updateDocument(user.uid, {
+                dailyUpdates:{points:false, strike:false},
+                strike:strike-1,
+                points: points - calculatePointsWithMultiplier({
+                    multiplier,
+                    todaysPoints:totalUserTodaysPoints,
+                    globalStrike:strike
+                })
+            } as UserData)
         }
-    }, [user.uid, todaysUndoneHabits.length, userData.habits.length]);
 
-   /* update multiplier*/
-    //if all habits scheduled for today has been completed, calculate and show today's multiplier to the user
-    useEffect(() => {
-        //generate multiplier
-        if (todaysUndoneHabits.length===0 && todaysAllHabits.length > 0 && !userData!.multiplier){
-            const multiplier = generateMultiplier()
-            updateDocument(user!.uid, {multiplier})
-        }
-    }, [todaysUndoneHabits.length, todaysAllHabits.length]);
-
-
-    /*update global points(use multiplier)*/
-useEffect(() => {
-    const extraPoints = ():number => {
-        const totalUserTodaysPoints = calculateTotalUserPoints(todaysAllHabits)
-        return  calculatePointsWithMultiplier({
-            multiplier:userData.multiplier!,
-            todaysPoints: totalUserTodaysPoints,
-            globalStrike: userData.strike
-        })
-    }
-
-    //add the points
-    if (todaysUndoneHabits.length === 0 &&
-        todaysAllHabits.length > 0 &&
-        userData.multiplier &&
-        userData.dailyUpdates.strike &&
-        !userData.dailyUpdates.points)
-    {
-        updateDocument(user.uid, {points: userData.points+extraPoints(), "dailyUpdates.points": true})
-    }
-
-    // subtract the points
-
-    if (todaysUndoneHabits.length === 1 &&
-        userData.multiplier &&
-        userData.dailyUpdates.strike &&
-        userData.dailyUpdates.points)
-    {
-        updateDocument(user.uid, {points: userData.points-extraPoints()})
-    }
-
-}, [
-    todaysUndoneHabits.length,
-    todaysAllHabits.length,
-    userData.multiplier,
-    userData.dailyUpdates.strike,
-    user.uid,
-    userData.points,
-    userData.strike
-]);
+    }, [todaysAllHabits.length, todaysUndoneHabits.length]);
 }
 

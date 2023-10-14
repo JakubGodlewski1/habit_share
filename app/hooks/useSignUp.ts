@@ -6,6 +6,7 @@ import {auth} from "@/app/utils/firebase/config";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {UserData} from "@/types";
+import {generateMultiplier} from "@/lib/generateMultiplier";
 
 const getErrorsAndMessagesFromZod = (zodErrorObj:ZodError) => {
     return zodErrorObj.errors.map(err=>{
@@ -71,11 +72,11 @@ export const useSignUp = () => {
                 displayName:name,
                 friends:[],
                 habits: [],
-                multiplier: null,
+                multiplier: generateMultiplier(),
                 points: 0,
                 dailyUpdates:{
                     strike:false,
-                    points:false
+                    points:false,
                 }
 
             }

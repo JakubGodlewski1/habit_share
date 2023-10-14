@@ -1,10 +1,10 @@
 "use client"
-import {ChangeEvent, useEffect, useState} from "react";
+import {ChangeEvent} from "react";
 import {Habit} from "@/types";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {convertDate} from "@/lib/convertDate";
-import {calculateDailyPointsToAdd, calculateDailyPointsToRemove} from "@/lib/calculatePoints";
+import {calculateDailyPoints} from "@/lib/calculatePoints";
 import {useGlobalUpdates} from "@/app/hooks/GlobalUpdates/useGlobalUpdates";
 
 const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
@@ -19,7 +19,7 @@ const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
                 //on complete
                 {...h,
                      strike: h.strike+1,
-                     points: calculateDailyPointsToAdd(h.strike+1, h.points),
+                     points:h.points + calculateDailyPoints(h.strike+1),
                      daysWhenCompleted: [...h.daysWhenCompleted, convertDate(new Date())]   ,
                      completedToday: true
                 }
@@ -28,7 +28,7 @@ const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
                 {
                  ...h,
                     strike: h.strike -1,
-                    points: calculateDailyPointsToRemove(h.strike, h.points),
+                    points: h.points - calculateDailyPoints(h.strike),
                     daysWhenCompleted: h.daysWhenCompleted.filter(d=>d!==convertDate(new Date())),
                     completedToday: false
                 }
@@ -36,8 +36,8 @@ const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
         updateDocument(user?.uid!, {
             habits: updatedHabits,
             points: e.target.checked ?
-                calculateDailyPointsToAdd(habit.strike+1, userData!.points) :
-                calculateDailyPointsToRemove(habit.strike, userData!.points)
+                userData!.points + calculateDailyPoints(habit.strike+1) :
+                userData!.points - calculateDailyPoints(habit.strike)
         })
     }
 

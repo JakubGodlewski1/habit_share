@@ -3,6 +3,7 @@ import {GoogleAuthProvider, signInWithPopup} from "@firebase/auth";
 import {auth} from "@/app/utils/firebase/config";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {UserData} from "@/types";
+import {generateMultiplier} from "@/lib/generateMultiplier";
 
 
 export const useGoogleAuth = () => {
@@ -28,7 +29,7 @@ export const useGoogleAuth = () => {
                         displayName: user.email || "user name",
                         friends:[],
                         habits: [],
-                        multiplier: null,
+                        multiplier: generateMultiplier(),
                         points:0,
                         dailyUpdates:{
                             strike:false,
