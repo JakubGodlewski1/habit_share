@@ -5,7 +5,9 @@ import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {convertDate} from "@/lib/convertDate";
 import {calculateDailyPoints} from "@/lib/calculatePoints";
-import {useGlobalUpdates} from "@/app/hooks/GlobalUpdates/useGlobalUpdates";
+import {useGlobalUpdates} from "@/app/hooks/useGlobalUpdates";
+
+
 
 const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
     const {updateDocument} = useFirestore("users")

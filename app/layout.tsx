@@ -5,7 +5,7 @@ import './styles/changedDaisyComponents.scss'
 
 import type { Metadata } from 'next'
 import {Abhaya_Libre} from 'next/font/google'
-import Navbar from "@/app/components/Navbar/Navbar";
+import Navbar from "@/app/components/navbar/Navbar";
 import {AuthContextProvider} from "@/app/context/AuthContext";
 
 const Abhaya = Abhaya_Libre(

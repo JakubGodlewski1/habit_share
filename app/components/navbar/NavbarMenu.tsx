@@ -1,6 +1,6 @@
 "use client"
 import Link from "next/link";
-import SignOutBtn from "@/app/components/Navbar/signOutBtn";
+import SignOutBtn from "@/app/components/navbar/signOutBtn";
 import {usePathname, useRouter} from "next/navigation";
 import {useEffect, useState} from "react";
 import {GrMenu} from "react-icons/gr";
