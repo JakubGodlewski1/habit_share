@@ -21,6 +21,7 @@ export type Habit = {
 }
 
 export type UserData = {
+    uid: string,
     email: string,
     strike: number,
     displayName: string,

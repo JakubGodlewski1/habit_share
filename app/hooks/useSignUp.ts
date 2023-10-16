@@ -67,6 +67,7 @@ export const useSignUp = () => {
 
             // create user account in database
             const userInitialData:UserData = {
+                uid: user.uid,
                 email:user.email || "example@email.com",
                 strike:0,
                 displayName:name,

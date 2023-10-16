@@ -43,7 +43,7 @@ const Page = () => {
                     <HabitCartsContainer key={label} current={false}  habits={habits} label={label}/>
                 ))}
                 {//current
-                    subpage === "current" && currentHabits.length > 0 && currentCategoryLabels.map(label=>(
+                    subpage === "current" && currentCategoryLabels.map(label=>(
                         <HabitCartsContainer key={label} current={true}  habits={currentHabits} label={label}/>
                     ))}
             </div>
