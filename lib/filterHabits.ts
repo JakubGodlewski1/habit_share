@@ -3,7 +3,7 @@ import {AllCategoryLabel, CurrentCategoryLabel, Habit} from "@/types";
 import {convertDate} from "@/lib/convertDate";
 import {isThisMonth, isThisWeek} from "date-fns";
 
-// not done or done today
+// not done at all or done only today
 const today = (habit:Habit):boolean => {
     const {repetitionOption, repetitionDates} = habit
     return (

@@ -6,9 +6,9 @@ import {useEffect, useState} from "react";
 import HabitsAccordion from "@/app/(pages)/(signedIn)/(my-habits)/components/HabitsAccordion";
 import {useUserDocSubscription} from "@/app/hooks/useUserDocSubscription";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
-import {calculateTotalUserPoints} from "@/lib/calculateTotalUserPoints";
 import {AllCategoryLabel, CurrentCategoryLabel, Habit} from "@/types";
 import {getCurrentHabits} from "@/lib/getCurrentHabits";
+import {differenceInDays} from "date-fns";
 
 const allCategoryLabels:AllCategoryLabel[] = ["daily", "weekly", "monthly", "specific days"]
 const currentCategoryLabels:CurrentCategoryLabel[] = ["today", "this week", "this month"]
