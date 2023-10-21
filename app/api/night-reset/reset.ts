@@ -68,7 +68,6 @@ export const reset = (userData:UserData):UserData =>{
     //create new multiplier
     user.multiplier = generateMultiplier()
     //handle all the habits - update their strikes and points accordingly
-    user.habits = updateHabits(user.habits)
-
+    if (user.habits.length > 0) user.habits = updateHabits(user.habits)
     return user
 }

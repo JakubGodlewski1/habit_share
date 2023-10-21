@@ -10,12 +10,14 @@ export  async function GET() {
     const snapshot = await getDocs(collection(db, "users"));
     const data = snapshot.docs.map((doc) => doc.data()) as UserData[];
     //update every user
+    console.log(data)
     data.forEach((userData)=>{
         const updatedUserData = reset(userData)
         try {
             const docRef = doc(db, "users", userData.uid)
             updateDoc(docRef, updatedUserData as UserData)
         }catch (err:any){
+            console.log(err)
             error=err.message
         }
     })
