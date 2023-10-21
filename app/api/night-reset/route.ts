@@ -6,11 +6,9 @@ import {reset} from "@/app/api/night-reset/reset";
 
 export  async function GET() {
     let error = null;
-
     const snapshot = await getDocs(collection(db, "users"));
     const data = snapshot.docs.map((doc) => doc.data()) as UserData[];
     //update every user
-    console.log(data)
     data.forEach((userData)=>{
         const updatedUserData = reset(userData)
         try {

@@ -15,6 +15,9 @@ type Props = {
 
 const TodaysMultiplier = ({multiplier}:Props) => {
     const {userData, user} = useAuthContext()
+    const blurMultiplier = (todaysHabits({userData:userData!, completed:false}).length!==0) &&
+        userData!.habits.filter(h=>filterHabits({habit:h, option: "today"})).length === 0
+
 
 
     return (
@@ -22,7 +25,7 @@ const TodaysMultiplier = ({multiplier}:Props) => {
             <span>Today&apos;s <br/>multiplier</span>
             <div className="box-primary flex-center">
                 <span
-                    style={{filter:(multiplier && todaysHabits({userData:userData!, completed:false}).length===0) ? "blur(0)" : "blur(5px)"}}
+                    style={{filter:!blurMultiplier ? "blur(0)" : "blur(5px)"}}
                     className="text-accent text-xl w-12 text-center">
                     {multiplier || "FD"}%
                 </span>
