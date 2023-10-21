@@ -12,7 +12,7 @@ const updateHabits= (habits: Habit[]):Habit[] => {
             ...habit,
             completedToday: false,
             strike:0,
-            points: habit.points - calculateDailyPoints(habit.strike)
+            points: (habit.points - calculateDailyPoints(habit.strike)) < 0 ? 0 : habit.points - calculateDailyPoints(habit.strike)
         } as Habit
     }
 
