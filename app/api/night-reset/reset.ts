@@ -10,9 +10,10 @@ const updateHabits= (habits: Habit[]):Habit[] => {
     const resetHabit = (habit:Habit) => {
         return {
             ...habit,
+            completedToday: false,
             strike:0,
             points: habit.points - calculateDailyPoints(habit.strike)
-        }
+        } as Habit
     }
 
     return habits.map(habit=>{
@@ -50,7 +51,7 @@ const updateHabits= (habits: Habit[]):Habit[] => {
             !isSameMonth(addMonths(new Date(lastDayWhenCompleted), 1), new Date())
         ) return resetHabit(habit)
 
-        return habit
+        return {...habit, completedToday:false}
     })
 
 }

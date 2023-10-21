@@ -45,3 +45,4 @@ export const getCategoryOptionFromHabit = (habit:Habit):CategoryOption => {
     else if (repetitionOption.type === "repeat" && repetitionOption.repeatFrequency === "monthly") return "this month"
     else return "today"
 }
+
