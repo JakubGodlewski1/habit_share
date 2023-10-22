@@ -20,5 +20,5 @@ export  async function GET() {
     })
 
 
-    return NextResponse.json({error});
+    return NextResponse.json({error, users: data.length});
 }
