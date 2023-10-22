@@ -4,17 +4,17 @@ import {collection, doc, getDocs, updateDoc} from "firebase/firestore";
 import {UserData} from "@/types";
 import {reset} from "@/app/api/night-reset/reset";
 
+export const revalidate = 0
+
 export async function GET() {
     let error = null;
     const snapshot = await getDocs(collection(db, "users"));
     const data = snapshot.docs.map((doc) => doc.data()) as UserData[];
     //update every user
-    let docR = null;
     data.forEach((userData)=>{
         const updatedUserData = reset(userData)
         try {
             const docRef = doc(db, "users", userData.uid)
-            docR = docRef
             updateDoc(docRef, updatedUserData as UserData)
         }catch (err:any){
             error=err
@@ -22,5 +22,5 @@ export async function GET() {
     })
 
 
-    return NextResponse.json({error, users: data.length, docR});
+    return NextResponse.json({error, users: data.length});
 }
