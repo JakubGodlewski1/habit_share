@@ -9,12 +9,12 @@ export async function GET() {
     const snapshot = await getDocs(collection(db, "users"));
     const data = snapshot.docs.map((doc) => doc.data()) as UserData[];
     //update every user
-     const up:any = []
+    let docR = null;
     data.forEach((userData)=>{
         const updatedUserData = reset(userData)
-        up.push(updatedUserData)
         try {
             const docRef = doc(db, "users", userData.uid)
+            docR = docRef
             updateDoc(docRef, updatedUserData as UserData)
         }catch (err:any){
             error=err
@@ -22,5 +22,5 @@ export async function GET() {
     })
 
 
-    return NextResponse.json({error, users: data.length, updatedUserData: up});
+    return NextResponse.json({error, users: data.length, docR});
 }
