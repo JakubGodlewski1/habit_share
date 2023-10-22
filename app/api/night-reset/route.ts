@@ -15,8 +15,7 @@ export  async function GET() {
             const docRef = doc(db, "users", userData.uid)
             updateDoc(docRef, updatedUserData as UserData)
         }catch (err:any){
-            console.log(err)
-            error=err.message
+            error=err
         }
     })
 
