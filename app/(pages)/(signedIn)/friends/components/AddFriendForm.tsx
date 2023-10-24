@@ -1,12 +1,15 @@
 "use client"
 import {FormEvent,  useState} from "react";
+import {useAddFriend} from "@/app/hooks/useAddFriend";
 
 const AddFriendForm = ({closeModal}:{closeModal:()=>void}) => {
     const [friendEmail, setFriendEmail] = useState("")
+    const {addFriend, isPending, error} = useAddFriend()
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
-        closeModal()
+        const {error} = await addFriend(friendEmail)
+        if (!error) closeModal()
     }
 
     return (
@@ -21,7 +24,10 @@ const AddFriendForm = ({closeModal}:{closeModal:()=>void}) => {
                     type="text"
                 />
             </label>
-            <button className="btn btn-primary mt-auto">Add the friend</button>
+            {error && <span className="alert-error alert">{error}</span>}
+            <button disabled={isPending} className="btn btn-primary mt-auto">
+                {isPending ? "Adding the friend" : "Add the friend"}
+            </button>
         </form>
     );
 };

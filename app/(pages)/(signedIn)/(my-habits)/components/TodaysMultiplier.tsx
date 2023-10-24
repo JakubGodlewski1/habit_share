@@ -15,10 +15,8 @@ type Props = {
 
 const TodaysMultiplier = ({multiplier}:Props) => {
     const {userData, user} = useAuthContext()
-    const blurMultiplier = (todaysHabits({userData:userData!, completed:false}).length!==0) &&
+    const blurMultiplier = (todaysHabits({userData:userData!, completed:false}).length!==0) ||
         userData!.habits.filter(h=>filterHabits({habit:h, option: "today"})).length === 0
-
-
 
     return (
         <div className="flex gap-2">
