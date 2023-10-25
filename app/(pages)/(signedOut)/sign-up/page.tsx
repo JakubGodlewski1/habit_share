@@ -1,19 +1,27 @@
 'use client'
 
-import {FormEvent, useState} from "react";
+import {ChangeEvent, FormEvent, useState} from "react";
 import {useSignUp} from "@/app/hooks/useSignUp";
-import Link from "next/link";
-import {AuthContext} from "@/app/context/AuthContext";
-import {useAuthContext} from "@/app/hooks/useAuthContext";
+import Link from "next/link"
 import GoogleAuthBtn from "@/app/(pages)/(signedOut)/components/GoogleAuthBtn";
+import {PicFile} from "@/types";
+
+type Credentials = {
+    name: string,
+    email: string,
+    password: string,
+    passwordConfirmation: string,
+    picObj: PicFile | null
+}
 
 const SignUp = () => {
     //states
-    const [credentials, setCredentials] = useState({
+    const [credentials, setCredentials] = useState<Credentials>({
         name: "",
         email: "",
         password: "",
-        passwordConfirmation: ""
+        passwordConfirmation: "",
+        picObj: null
     })
     const {email,password, passwordConfirmation, name} = credentials
 
@@ -26,6 +34,15 @@ const SignUp = () => {
         await signUp({email, password, passwordConfirmation, name})
     }
 
+    const handlePicFileChange = (e:ChangeEvent<HTMLInputElement>) => {
+        const picFileOriginal = e.target.files ? e.target.files[0] : null
+
+        setCredentials(p=>({...p, picObj: picFileOriginal ? {
+                name: picFileOriginal.name,
+                size: picFileOriginal.size,
+                type: picFileOriginal.type
+            } : null}))
+    }
 
     return (
         <main className="m-auto max-w-[480px] flex flex-col gap-2">
@@ -68,6 +85,14 @@ const SignUp = () => {
                         onChange={e=>setCredentials(p=>({...p, passwordConfirmation: e.target.value}))}
                         value={passwordConfirmation}
                         type="password"
+                    />
+                </label>
+                <label>
+                    <span>Your pic! Help your friends recognize You</span>
+                    <input
+                        onChange={handlePicFileChange}
+                        className=""
+                        type="file"
                     />
                 </label>
                 {validationErrors.passwordConfirmationErr && <span className="alert alert-error">{validationErrors.passwordConfirmationErr}</span>}

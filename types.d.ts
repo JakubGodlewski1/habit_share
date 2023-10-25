@@ -46,3 +46,8 @@ export const getCategoryOptionFromHabit = (habit:Habit):CategoryOption => {
     else return "today"
 }
 
+export type PicFile = {
+    size: number,
+    type: string,
+    name: string
+}

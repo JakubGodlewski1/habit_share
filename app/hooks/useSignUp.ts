@@ -23,6 +23,7 @@ type ValidationErrors = {
     passwordConfirmationErr:string,
     nameErr:string
 }
+
 export const useSignUp = () => {
     const [serverError, setServerError] = useState<null | string>(null)
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
@@ -30,7 +31,6 @@ export const useSignUp = () => {
     const [isPending, setIsPending] = useState(false)
     const {addDocument, error:addDocError} = useFirestore("users")
     const {updateUser, updateUserData} = useAuthContext()
-
 
     useEffect(() => {
         if (addDocError){
