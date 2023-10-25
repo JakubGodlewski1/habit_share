@@ -4,14 +4,13 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {useSignUp} from "@/app/hooks/useSignUp";
 import Link from "next/link"
 import GoogleAuthBtn from "@/app/(pages)/(signedOut)/components/GoogleAuthBtn";
-import {PicObj} from "@/types";
 
 type Credentials = {
     name: string,
     email: string,
     password: string,
     passwordConfirmation: string,
-    picObj: PicObj | null
+    picObj: File | null
 }
 
 const SignUp = () => {
@@ -32,16 +31,6 @@ const SignUp = () => {
     const onSubmit =async (e:FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
         await signUp({email, password, passwordConfirmation, name, picObj})
-    }
-
-    const handlePicObjChange = (e:ChangeEvent<HTMLInputElement>) => {
-        const picObjOriginal = e.target.files ? e.target.files[0] : null
-
-        setCredentials(p=>({...p, picObj: picObjOriginal ? {
-                name: picObjOriginal.name,
-                size: picObjOriginal.size,
-                type: picObjOriginal.type
-            } : null}))
     }
 
     return (
@@ -91,7 +80,7 @@ const SignUp = () => {
                 <label>
                     <span>Your pic! Help your friends recognize You</span>
                     <input
-                        onChange={handlePicObjChange}
+                        onChange={e=>setCredentials(p=>({...p, picObj: e.target.files ? e.target.files[0]: null}))}
                         className=""
                         type="file"
                     />

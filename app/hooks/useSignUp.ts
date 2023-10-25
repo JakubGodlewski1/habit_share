@@ -5,12 +5,12 @@ import {createUserWithEmailAndPassword, updateProfile} from "@firebase/auth";
 import {auth} from "@/app/utils/firebase/config";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
-import {PicObj, UserData} from "@/types";
+import {UserData} from "@/types";
 import {generateMultiplier} from "@/lib/generateMultiplier";
+import {ref, uploadBytes} from "firebase/storage"
+import {storage} from "@/app/utils/firebase/config";
 
 const getErrorsAndMessagesFromZod = (zodErrorObj:ZodError) => {
-    console.log(zodErrorObj)
-
     return zodErrorObj.errors.map(err=>{
         return {
             error: err.path[0]+"Err",
@@ -32,7 +32,7 @@ type Props = {
     password:string,
     passwordConfirmation:string,
     name:string,
-    picObj: PicObj | null
+    picObj: File | null
 }
 
 export const useSignUp = () => {
@@ -74,6 +74,10 @@ export const useSignUp = () => {
         }
         try {
             const {user} = await createUserWithEmailAndPassword(auth, email, password)
+            const uploadPath = `thumbnails/${user.uid}/${picObj?.name}`
+            const thumbnailsRef = ref(storage, uploadPath)
+            uploadBytes(thumbnailsRef, picObj!)
+
             await updateProfile(user, {displayName:name})
 
             // create user account in database
