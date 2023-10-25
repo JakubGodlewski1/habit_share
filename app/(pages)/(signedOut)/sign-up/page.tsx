@@ -4,14 +4,14 @@ import {ChangeEvent, FormEvent, useState} from "react";
 import {useSignUp} from "@/app/hooks/useSignUp";
 import Link from "next/link"
 import GoogleAuthBtn from "@/app/(pages)/(signedOut)/components/GoogleAuthBtn";
-import {PicFile} from "@/types";
+import {PicObj} from "@/types";
 
 type Credentials = {
     name: string,
     email: string,
     password: string,
     passwordConfirmation: string,
-    picObj: PicFile | null
+    picObj: PicObj | null
 }
 
 const SignUp = () => {
@@ -23,7 +23,7 @@ const SignUp = () => {
         passwordConfirmation: "",
         picObj: null
     })
-    const {email,password, passwordConfirmation, name} = credentials
+    const {email,password, passwordConfirmation, name, picObj} = credentials
 
     //hooks
     const {serverError, validationErrors ,isPending,signUp} = useSignUp()
@@ -31,16 +31,16 @@ const SignUp = () => {
 //functions
     const onSubmit =async (e:FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
-        await signUp({email, password, passwordConfirmation, name})
+        await signUp({email, password, passwordConfirmation, name, picObj})
     }
 
-    const handlePicFileChange = (e:ChangeEvent<HTMLInputElement>) => {
-        const picFileOriginal = e.target.files ? e.target.files[0] : null
+    const handlePicObjChange = (e:ChangeEvent<HTMLInputElement>) => {
+        const picObjOriginal = e.target.files ? e.target.files[0] : null
 
-        setCredentials(p=>({...p, picObj: picFileOriginal ? {
-                name: picFileOriginal.name,
-                size: picFileOriginal.size,
-                type: picFileOriginal.type
+        setCredentials(p=>({...p, picObj: picObjOriginal ? {
+                name: picObjOriginal.name,
+                size: picObjOriginal.size,
+                type: picObjOriginal.type
             } : null}))
     }
 
@@ -87,15 +87,16 @@ const SignUp = () => {
                         type="password"
                     />
                 </label>
+                {validationErrors.passwordConfirmationErr && <span className="alert alert-error">{validationErrors.passwordConfirmationErr}</span>}
                 <label>
                     <span>Your pic! Help your friends recognize You</span>
                     <input
-                        onChange={handlePicFileChange}
+                        onChange={handlePicObjChange}
                         className=""
                         type="file"
                     />
                 </label>
-                {validationErrors.passwordConfirmationErr && <span className="alert alert-error">{validationErrors.passwordConfirmationErr}</span>}
+                {validationErrors.picObjErr && <span className="alert alert-error">{validationErrors.picObjErr}</span>}
                 {serverError && <span className="alert alert-error">{serverError}</span>}
                 <div className="two-buttons">
                     <button disabled={isPending} className="btn">{isPending ? "Signing in...": "Sign up"}</button>

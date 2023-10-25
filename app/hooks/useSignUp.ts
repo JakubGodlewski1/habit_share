@@ -5,10 +5,12 @@ import {createUserWithEmailAndPassword, updateProfile} from "@firebase/auth";
 import {auth} from "@/app/utils/firebase/config";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
-import {UserData} from "@/types";
+import {PicObj, UserData} from "@/types";
 import {generateMultiplier} from "@/lib/generateMultiplier";
 
 const getErrorsAndMessagesFromZod = (zodErrorObj:ZodError) => {
+    console.log(zodErrorObj)
+
     return zodErrorObj.errors.map(err=>{
         return {
             error: err.path[0]+"Err",
@@ -21,13 +23,22 @@ type ValidationErrors = {
     emailErr: string,
     passwordErr:string,
     passwordConfirmationErr:string,
-    nameErr:string
+    nameErr:string,
+    picObjErr: string
+}
+
+type Props = {
+    email: string,
+    password:string,
+    passwordConfirmation:string,
+    name:string,
+    picObj: PicObj | null
 }
 
 export const useSignUp = () => {
     const [serverError, setServerError] = useState<null | string>(null)
     const [validationErrors, setValidationErrors] = useState<ValidationErrors>(
-        {emailErr:"", passwordConfirmationErr:"", passwordErr:"", nameErr:""})
+        {emailErr:"", passwordConfirmationErr:"", passwordErr:"", nameErr:"", picObjErr: ""})
     const [isPending, setIsPending] = useState(false)
     const {addDocument, error:addDocError} = useFirestore("users")
     const {updateUser, updateUserData} = useAuthContext()
@@ -38,13 +49,13 @@ export const useSignUp = () => {
         }
     }, [addDocError]);
 
-    const signUp = async ({email, password, passwordConfirmation, name}:{email:string, password:string, passwordConfirmation: string, name:string}) => {
+    const signUp = async ({email, password, passwordConfirmation, name, picObj}: Props) => {
         //reset
         setServerError(null)
-        setValidationErrors({passwordErr:"", passwordConfirmationErr: "", emailErr: "", nameErr:""})
+        setValidationErrors({passwordErr:"", passwordConfirmationErr: "", emailErr: "", nameErr:"", picObjErr: ""})
         setIsPending(true)
 
-        const validation = SignUpUserValidation.safeParse({email, password, passwordConfirmation, name})
+        const validation = SignUpUserValidation.safeParse({email, password, passwordConfirmation, name, picObj})
 
         //if any validation error, update validation errors state
         if (!validation.success){
