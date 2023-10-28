@@ -10,7 +10,7 @@ const PicObjType = z.union([
     z.null(),
     z.object({
         name: z.string(),
-        size: z.number().max(500000, "Your picture size is too big, max size is 0.5mb"),
+        size: z.number().max(3000000, "Your picture size is too big, max size is 3mb"),
         type: z.string().includes("image", { message: "The file you added is not an image" }),
     }),
 ])

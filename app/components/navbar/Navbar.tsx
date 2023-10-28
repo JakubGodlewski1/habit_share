@@ -1,8 +1,6 @@
-
 import Link from "next/link";
 import NavbarMenu from "@/app/components/navbar/NavbarMenu";
 import Logo from "@/app/components/navbar/Logo";
-import ProfilePicture from "@/app/components/navbar/ProfilePicture";
 
 const Navbar = async () => {
 

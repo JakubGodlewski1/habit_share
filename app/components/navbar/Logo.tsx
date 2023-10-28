@@ -13,7 +13,8 @@ const Logo = () => {
             <Image src={hero_friends} alt="logo"/>
             <h1 className="hidden xsm:block">Habit Share</h1>
             {user?.email && <span className="ml-2">{user.email.slice(0,15)} {user.email?.length > 15 && "..."}</span>}
-            <ProfilePicture/>
+            {user &&  <ProfilePicture/>}
+
         </div>
     );
 };
