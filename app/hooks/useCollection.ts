@@ -25,7 +25,7 @@ export const useCollection = ()=> {
         }finally {
             setIsPending(false)
         }
-
+        setDocuments(results)
         return results;
     }
 

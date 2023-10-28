@@ -4,7 +4,7 @@ import Modal from "@/app/components/Modal";
 import {useRef, useState} from "react";
 import AddFriendForm from "@/app/(pages)/(signedIn)/friends/components/AddFriendForm";
 
-const AddFriendBtn = () => {
+const AddFriendBtn = ({disableText=false, className}:{disableText?:boolean, className?:string}) => {
     const modalRef = useRef<HTMLDialogElement | null>(null)
 
     const openModal = () => {
@@ -24,8 +24,8 @@ const AddFriendBtn = () => {
             >
                 <AddFriendForm closeModal={closeModal}/>
             </Modal>
-            <h3 className="box flex-center">Add new friend</h3>
-            <button onClick={openModal} className="btn-primary btn-square btn">
+            {!disableText && <h3 className="box flex-center">Add new friend</h3>}
+            <button onClick={openModal} className={`btn-primary btn-square btn ${className}`}>
                 <IoAdd size={32}/>
             </button>
         </div>
