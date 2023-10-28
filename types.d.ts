@@ -21,6 +21,7 @@ export type Habit = {
 }
 
 export type UserData = {
+    thumbnailUrl?: string,
     uid: string,
     email: string,
     strike: number,

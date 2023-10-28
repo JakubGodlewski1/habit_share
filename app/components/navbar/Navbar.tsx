@@ -1,8 +1,8 @@
-import hero_friends from "../../../public/hero_friends.svg"
+
 import Link from "next/link";
-import Image from "next/image";
 import NavbarMenu from "@/app/components/navbar/NavbarMenu";
 import Logo from "@/app/components/navbar/Logo";
+import ProfilePicture from "@/app/components/navbar/ProfilePicture";
 
 const Navbar = async () => {
 

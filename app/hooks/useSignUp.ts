@@ -1,3 +1,4 @@
+'use client'
 import {useEffect, useState} from "react";
 import {SignUpUserValidation} from "@/app/utils/ValidationSchemas";
 import {ZodError} from "zod";
@@ -7,7 +8,7 @@ import {useFirestore} from "@/app/hooks/useFirestore";
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {UserData} from "@/types";
 import {generateMultiplier} from "@/lib/generateMultiplier";
-import {ref, uploadBytes} from "firebase/storage"
+import {getDownloadURL, ref, uploadBytes} from "firebase/storage"
 import {storage} from "@/app/utils/firebase/config";
 
 const getErrorsAndMessagesFromZod = (zodErrorObj:ZodError) => {
@@ -76,12 +77,13 @@ export const useSignUp = () => {
             const {user} = await createUserWithEmailAndPassword(auth, email, password)
             const uploadPath = `thumbnails/${user.uid}/${picObj?.name}`
             const thumbnailsRef = ref(storage, uploadPath)
-            uploadBytes(thumbnailsRef, picObj!)
-
+            await uploadBytes(thumbnailsRef, picObj!)
             await updateProfile(user, {displayName:name})
+            const thumbnailDownloadURL = await getDownloadURL(thumbnailsRef)
 
             // create user account in database
             const userInitialData:UserData = {
+                thumbnailUrl: thumbnailDownloadURL,
                 uid: user.uid,
                 email:user.email || "example@email.com",
                 strike:0,

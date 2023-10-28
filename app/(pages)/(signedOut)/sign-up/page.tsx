@@ -79,11 +79,12 @@ const SignUp = () => {
                 {validationErrors.passwordConfirmationErr && <span className="alert alert-error">{validationErrors.passwordConfirmationErr}</span>}
                 <label>
                     <span>Your pic! Help your friends recognize You</span>
-                    <input
-                        onChange={e=>setCredentials(p=>({...p, picObj: e.target.files ? e.target.files[0]: null}))}
-                        className=""
-                        type="file"
-                    />
+                    <div className="bg-accent input input-md flex items-center pl-1">
+                            <input
+                                onChange={e=>setCredentials(p=>({...p, picObj: e.target.files ? e.target.files[0]: null}))}
+                                type="file"
+                            />
+                        </div>
                 </label>
                 {validationErrors.picObjErr && <span className="alert alert-error">{validationErrors.picObjErr}</span>}
                 {serverError && <span className="alert alert-error">{serverError}</span>}
