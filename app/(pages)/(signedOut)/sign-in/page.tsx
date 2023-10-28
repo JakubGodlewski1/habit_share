@@ -54,7 +54,7 @@ const SignIn = () => {
                     <button>Forgot password?</button>
                 </div>
             </form>
-            <GoogleAuthBtn type="signIn"/>
+            {/*<GoogleAuthBtn type="signIn"/>*/}
         </main>
 
     );

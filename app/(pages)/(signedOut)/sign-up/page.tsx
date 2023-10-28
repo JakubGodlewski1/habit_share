@@ -93,7 +93,7 @@ const SignUp = () => {
                     <Link href="/sign-in">Sign in instead</Link>
                 </div>
             </form>
-            <GoogleAuthBtn type="signUp"/>
+            {/*<GoogleAuthBtn type="signUp"/>*/}
         </main>
     );
 };

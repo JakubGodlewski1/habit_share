@@ -7,11 +7,9 @@ const ProfilePicture = () => {
 
     return (
         <div className="overflow-hidden w-10 h-10 rounded-full">
-            <img className="rounded-full w-10" src={userData?.thumbnailUrl!} alt="thumbnail"/>;
+            {userData?.thumbnailUrl && <img className="w-full h-full object-cover" src={userData?.thumbnailUrl} alt="thumbnail"/>}
         </div>
         )
-
-
 };
 
 export default ProfilePicture;

@@ -12,8 +12,14 @@ const Logo = () => {
         <div className="flex items-center gap-2">
             <Image src={hero_friends} alt="logo"/>
             <h1 className="hidden xsm:block">Habit Share</h1>
-            {user?.email && <span className="ml-2">{user.email.slice(0,15)} {user.email?.length > 15 && "..."}</span>}
-            {user &&  <ProfilePicture/>}
+            {
+                user && (
+                    <>
+                        {user!.displayName && <span className="ml-2">{user?.displayName.slice(0,15)} {user!.displayName.length > 15 && "..."}</span>}
+                        <ProfilePicture/>
+                    </>
+                )
+            }
 
         </div>
     );

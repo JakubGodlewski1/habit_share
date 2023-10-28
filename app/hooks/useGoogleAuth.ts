@@ -1,3 +1,4 @@
+'use client'
 import {useAuthContext} from "@/app/hooks/useAuthContext";
 import {GoogleAuthProvider, signInWithPopup} from "@firebase/auth";
 import {auth} from "@/app/utils/firebase/config";
@@ -24,10 +25,11 @@ export const useGoogleAuth = () => {
                 else {
                     // create user account in database
                     const userInitialData:UserData = {
+                        thumbnailUrl: undefined,
                         uid: user.uid,
-                        email:user.email || "example@email.com",
+                        email:user.email!,
                         strike:0,
-                        displayName: user.email || "user name",
+                        displayName: undefined,
                         friends:[],
                         habits: [],
                         multiplier: generateMultiplier(),
@@ -35,8 +37,7 @@ export const useGoogleAuth = () => {
                         dailyUpdates:{
                             strike:false,
                             points: false
-                    }
-
+                      }
                     }
                     await addDocument(userInitialData, user.uid)
                     updateUserData(userInitialData)
@@ -44,6 +45,7 @@ export const useGoogleAuth = () => {
             }
             updateAuthIsReady(true)
         }catch (err:any){
+            console.error(err.message)
             alert(err.message)
         }
     }

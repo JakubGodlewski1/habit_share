@@ -25,7 +25,7 @@ export type UserData = {
     uid: string,
     email: string,
     strike: number,
-    displayName: string,
+    displayName?: string,
     friends:UserInitialData[],
     habits: Habit[],
     multiplier: number,

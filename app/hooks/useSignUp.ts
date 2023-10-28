@@ -85,7 +85,7 @@ export const useSignUp = () => {
             const userInitialData:UserData = {
                 thumbnailUrl: thumbnailDownloadURL,
                 uid: user.uid,
-                email:user.email || "example@email.com",
+                email:user.email!,
                 strike:0,
                 displayName:name,
                 friends:[],
