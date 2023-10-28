@@ -15,7 +15,6 @@ const CompleteHabitBtn = ({habit}:{habit:Habit}) => {
 
     const handleHabitToggle = (e: ChangeEvent<HTMLInputElement>) => {
 
-
         const updatedHabits = userData?.habits.map(h=>h.title!==habit.title ? h :
             e.target.checked  ?
                 //on complete

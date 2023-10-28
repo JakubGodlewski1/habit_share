@@ -7,7 +7,6 @@ const HabitCart = ({habit}:{habit:Habit}) => {
     const {title} = habit
     const habitRepetitionType:AllCategoryLabel = habit.repetitionOption.type === "repeat" ? habit.repetitionOption.repeatFrequency : "specific days"
 
-
     return (
         <div style={{opacity: habit.completedToday ? "70%" : "100%"}} className="flex p-2 rounded-lg bg-primary gap-2">
             <CompleteHabitBtn habit={habit}/>

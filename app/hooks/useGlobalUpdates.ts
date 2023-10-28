@@ -2,7 +2,7 @@ import {User} from "@firebase/auth";
 import {UserData} from "@/types";
 import {useFirestore} from "@/app/hooks/useFirestore";
 import {filterHabits} from "@/lib/filterHabits";
-import {useEffect, useState} from "react";
+import {useEffect, useRef, useState} from "react";
 import {todaysHabits} from "@/lib/todaysHabits";
 import {calculatePointsWithMultiplier} from "@/lib/calculatePointsWithMultiplier";
 import {calculateDailyPoints} from "@/lib/calculatePoints";
@@ -10,10 +10,12 @@ import {calculateDailyPoints} from "@/lib/calculatePoints";
 export const useGlobalUpdates = (userData:UserData, user:User)=>{
     const [isPending, setIsPending] = useState(false)
 
-    const {habits, dailyUpdates, multiplier, strike, points} = userData
+    const {dailyUpdates, multiplier, strike, points} = userData
     const {updateDocument} = useFirestore("users")
     const todaysUndoneHabits =  todaysHabits({userData, completed: false})
     const todaysAllHabits =  userData.habits.filter(habit=>filterHabits({habit, option:"today"}))
+    const todaysDoneHabits = todaysHabits({userData, completed:true})
+    const pointsForDoneHabits = todaysDoneHabits.reduce((total, habit)=>total+=habit.points, 0)
     //calculate all points of today's habits AS IF they were already completed
     let totalUserTodaysPoints = 0
     todaysAllHabits.forEach(h=>{
@@ -22,6 +24,8 @@ export const useGlobalUpdates = (userData:UserData, user:User)=>{
         //if habit is not completed
         if (!h.completedToday)totalUserTodaysPoints+=h.points + calculateDailyPoints(h.strike+1)
     })
+
+    const prevTodayHabitsLength = useRef(todaysDoneHabits.length)
 
     useEffect(() => {
         //when user completes all today's habits, update global strike and points
@@ -63,7 +67,7 @@ export const useGlobalUpdates = (userData:UserData, user:User)=>{
                     strike:strike-1,
                     points: points - calculatePointsWithMultiplier({
                         multiplier,
-                        todaysPoints:totalUserTodaysPoints,
+                        todaysPoints:todaysAllHabits.length === prevTodayHabitsLength.current ? totalUserTodaysPoints : pointsForDoneHabits,
                         globalStrike:strike
                     })
                 } as UserData)
@@ -82,9 +86,7 @@ export const useGlobalUpdates = (userData:UserData, user:User)=>{
         ){
             subtractPointsAndStrike()
         }
-
-
-
+        prevTodayHabitsLength.current = todaysAllHabits.length
 
     }, [todaysAllHabits.length, todaysUndoneHabits.length]);
 
