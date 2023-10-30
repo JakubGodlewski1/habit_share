@@ -4,7 +4,6 @@ import {filterHabits} from "@/lib/filterHabits";
 
 const FriendCartsContainer = ({friends}:{friends: UserData[]}) => {
 
-
     return (
         <div className="grid-cols-1 md:grid-cols-2 grid gap-2">
             {friends.map(friend=>(

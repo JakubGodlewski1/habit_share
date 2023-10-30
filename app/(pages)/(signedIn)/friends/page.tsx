@@ -11,16 +11,22 @@ import Image from "next/image";
 
 const FriendsPage = () => {
     const [haveFriends, setHaveFriends] = useState<boolean | null>(null)
-
     useUserDocSubscription()
+
     const {userData} = useAuthContext()
-    const {getCollection, isPending, documents:friends} = useCollection()
+    const {getCollection, isPending, documents:friends, unsub} = useCollection(true)
 
     useEffect(() => {
-        if (userData!.friends.length > 0){
-            getCollection("users", ["email", "in", userData?.friends])
-            setHaveFriends(true)
-        }else setHaveFriends(false)
+        const getFriends = async () => {
+            if (userData!.friends.length > 0){
+                if (unsub)unsub()
+                await getCollection("users", ["email", "in", userData?.friends])
+                setHaveFriends(true)
+            }else setHaveFriends(false)
+        }
+        getFriends()
+
+        if (unsub)return ()=>unsub()
     }, [userData?.friends.length]);
 
     return (

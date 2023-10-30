@@ -23,7 +23,7 @@ export const useAddFriend = () => {
         //check if the user is not trying to add his own email
         if (email===userData?.email)return invalidate("The email seems to belonging to You")
         //check if the account with the email exists
-        const friendAccount = await getCollection("users", ["email", "==", email])
+        const {documents: friendAccount} = await getCollection("users", ["email", "==", email])
         if (friendAccount.length===0) return invalidate("Could not find the email")
         //if success
         return {error: null}

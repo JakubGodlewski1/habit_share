@@ -1,33 +1,50 @@
 'use client'
 import {useState} from "react";
-import {collection, FieldPath, getDocs, query, where, WhereFilterOp} from "firebase/firestore";
+import {collection, FieldPath, getDocs, onSnapshot, query, where, WhereFilterOp} from "firebase/firestore";
 import {db} from "@/app/utils/firebase/config";
+import {Unsubscribe} from "@firebase/util";
 
-
-export const useCollection = ()=> {
+export const useCollection = (subscription?: boolean) => {
     const [isPending, setIsPending] = useState(false)
     const [error, setError] = useState<null | string>(null)
     const [documents, setDocuments] = useState<any[]>([])
+    const [unsub, setUnsub] = useState<null | Unsubscribe>(null)
 
-    const getCollection = async (collectionName:string, _q?:[string | FieldPath, WhereFilterOp, unknown ]) =>{
+    const getCollection = async (collectionName: string, _q?: [string | FieldPath, WhereFilterOp, unknown]) => {
+        const documents:any[] = []
         setIsPending(true)
-         const collectionRef = collection(db, collectionName)
+        const collectionRef = collection(db, collectionName)
         let q;
-        if (_q){
+        if (_q) {
             q = query(collectionRef, where(..._q))
         }
-        const results:any[] = []
+        let unsub: Unsubscribe;
         try {
-            const querySnapshot = await getDocs(q || collectionRef);
-            querySnapshot.forEach((doc) => results.push(doc.data()));
+            if (!subscription){
+                const results:any[] = []
+                //without subscription
+                const querySnapshot = await getDocs(q || collectionRef);
+                querySnapshot.forEach((doc) => results.push(doc.data()));
+                documents.push(...results)
+            }else{
+                //with subscription
+                    unsub = onSnapshot(q || collectionRef, snapshot => {
+                        const results:any[] = []
+                    snapshot.forEach((doc) => results.push(doc.data()));
+                    setDocuments(results)
+                        documents.push(...results)
+                },err=>{throw new Error(err.message)})
+
+                setUnsub(()=>unsub)
+            }
+
         }catch (err:any){
             setError(err.message)
         }finally {
             setIsPending(false)
         }
-        setDocuments(results)
-        return results;
+        return {documents};
     }
 
-    return {isPending, getCollection, documents}
+    return {isPending, getCollection, documents, unsub}
 }
