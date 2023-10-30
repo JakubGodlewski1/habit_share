@@ -4,8 +4,8 @@ import Link from "next/link";
 
 const HeroPage = () => {
     return (
-        <div className="hero min-h-screen">
-            <div className="hero-content flex-col lg:flex-row-reverse">
+        <div style={{height:"calc(100vh - 68px)"}} className="mt-[-32px]">
+            <div className="hero-content flex-col lg:flex-row-reverse mx-auto">
                 <Image className="max-h-[35vh] w-auto lg:max-h-[80vh]" src={many_heroes} alt="heroes"/>
                 <div className='flex flex-col items-center lg:items-start'>
                     <h1 className="text-6xl lg:text-8xl font-bold text-center lg:text-left">Become a habit hero!</h1>
