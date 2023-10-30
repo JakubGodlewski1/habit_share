@@ -37,13 +37,13 @@ const FriendsPage = () => {
             {isPending && <span>Loading...</span>}
             {haveFriends && friends && <FriendCartsContainer friends={friends}/>}
             {haveFriends === false &&
-                <div className="flex justify-around items-center py-8 px-4 rounded-lg absolute top-[50vh] left-[50vw] -z-10 md:w-[600px] -translate-x-1/2 -translate-y-1/2 lg:w-[800px]">
+                <div className="flex justify-around items-center py-8 px-4 rounded-lg absolute top-[50vh] left-[50vw] -z-10 w-[400px] md:w-[600px] -translate-x-1/2 -translate-y-1/2 lg:w-[800px]">
                     <div>
-                        <h1 className="text-center  text-6xl mb-4">No friends yet</h1>
+                        <h1 className="text-center text-6xl mb-4">No friends yet</h1>
                         <h3 className="text-center mb-4 text-2xl">Add friends to fully enjoy habitShare</h3>
                         <AddFriendBtn disableText={true} className="btn-primary mx-auto"/>
                     </div>
-                    <div className="hidden md:block">
+                    <div className="hidden lg:block">
                         <Image width="400" height="400" style={{filter:"invert(18%) sepia(7%) saturate(4287%) hue-rotate(206deg) brightness(98%) contrast(92%)"}} src={hero_friends} alt="hero friends"/>
                     </div>
                 </div>
