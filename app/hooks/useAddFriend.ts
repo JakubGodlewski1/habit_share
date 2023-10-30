@@ -35,6 +35,7 @@ export const useAddFriend = () => {
         if (error) return {error}
 
         else {
+            setError(null)
             await updateDocument(user!.uid, {...userData, friends: [...userData!.friends, email]})
             return {error}
         }

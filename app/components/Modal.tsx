@@ -13,10 +13,10 @@ type Props = {
 const Modal = forwardRef(({children, modalLabel, closeModal}:Props, ref:any) => {
 
     return (
-    <dialog ref={ref} className="modal">
+    <dialog ref={ref} className="modal max-h-[90vh]">
         <div className="bg-secondary modal-box p-0">
             <div className="flex justify-between align-top border-b-black border-b-[1px] p-4">
-                <h3>{modalLabel}</h3>
+                <h3 className="text-inherit">{modalLabel}</h3>
                 <button
                     onClick={closeModal}
                     className="btn btn-sm btn-circle btn-ghost">

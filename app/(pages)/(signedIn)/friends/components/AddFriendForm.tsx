@@ -9,7 +9,11 @@ const AddFriendForm = ({closeModal}:{closeModal:()=>void}) => {
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const {error} = await addFriend(friendEmail)
-        if (!error) closeModal()
+        if (!error) {
+            setFriendEmail("")
+
+            closeModal()
+        }
     }
 
     return (

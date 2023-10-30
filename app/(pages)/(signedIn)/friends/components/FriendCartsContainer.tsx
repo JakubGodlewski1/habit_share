@@ -9,6 +9,7 @@ const FriendCartsContainer = ({friends}:{friends: UserData[]}) => {
             {friends.map(friend=>(
                 <FriendCart
                     key={friend.email}
+                    email={friend.email}
                     imgSrc={friend.thumbnailUrl!}
                     name={friend.displayName!}
                     strike={friend.strike}
