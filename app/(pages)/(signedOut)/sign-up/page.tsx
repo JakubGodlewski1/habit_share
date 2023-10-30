@@ -89,7 +89,7 @@ const SignUp = () => {
                 {validationErrors.picObjErr && <span className="alert alert-error">{validationErrors.picObjErr}</span>}
                 {serverError && <span className="alert alert-error">{serverError}</span>}
                 <div className="two-buttons">
-                    <button disabled={isPending} className="btn">{isPending ? "Signing in...": "Sign up"}</button>
+                    <button disabled={isPending} className="btn btn-primary">{isPending ? "Signing in...": "Sign up"}</button>
                     <Link href="/sign-in">Sign in instead</Link>
                 </div>
             </form>

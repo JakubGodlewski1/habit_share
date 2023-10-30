@@ -50,7 +50,7 @@ const SignIn = () => {
                 {validationErrors.passwordErr && <span className="alert-error alert">{validationErrors.passwordErr}</span>}
                 {serverError && <span className="alert-error alert">{serverError}</span>}
                 <div className="two-buttons">
-                    <button onClick={()=>signIn({email, password})} disabled={isPending} className="btn">{isPending ? "Signing in..." : "Sign in"}</button>
+                    <button onClick={()=>signIn({email, password})} disabled={isPending} className="btn btn-primary">{isPending ? "Signing in..." : "Sign in"}</button>
                     <button>Forgot password?</button>
                 </div>
             </form>
