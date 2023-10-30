@@ -35,7 +35,7 @@ const FriendsPage = () => {
                 <AddFriendBtn/>
             </div>
             {isPending && <span>Loading...</span>}
-            {friends && <FriendCartsContainer friends={friends}/>}
+            {haveFriends && friends && <FriendCartsContainer friends={friends}/>}
             {haveFriends === false &&
                 <div className="flex justify-around items-center py-8 px-4 bg-primary rounded-lg absolute top-[50vh] left-[50vw] -z-10 md:w-[600px] -translate-x-1/2 -translate-y-1/2 lg:w-[800px]">
                     <div>

@@ -1,7 +1,7 @@
 "use client"
 import {IoAdd} from "react-icons/io5";
 import Modal from "@/app/components/Modal";
-import {useRef, useState} from "react";
+import {useRef} from "react";
 import AddFriendForm from "@/app/(pages)/(signedIn)/friends/components/AddFriendForm";
 
 const AddFriendBtn = ({disableText=false, className}:{disableText?:boolean, className?:string}) => {
