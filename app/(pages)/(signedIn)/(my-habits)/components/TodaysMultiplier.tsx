@@ -20,7 +20,7 @@ const TodaysMultiplier = ({multiplier}:Props) => {
 
     return (
         <div className="flex gap-2">
-            <span>Today&apos;s <br/>multiplier</span>
+            <span className="hidden sm:block">Today&apos;s <br/>multiplier</span>
             <div className="box-primary flex-center">
                 <span
                     style={{filter:!blurMultiplier ? "blur(0)" : "blur(5px)"}}
