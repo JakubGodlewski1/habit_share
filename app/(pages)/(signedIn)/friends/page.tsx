@@ -43,7 +43,9 @@ const FriendsPage = () => {
                         <h3 className="text-center mb-4 text-2xl">Add friends to fully enjoy habitShare</h3>
                         <AddFriendBtn disableText={true} className="btn-primary mx-auto"/>
                     </div>
-                    <Image width="400" height="400" style={{filter:"invert(18%) sepia(7%) saturate(4287%) hue-rotate(206deg) brightness(98%) contrast(92%)"}} src={hero_friends} alt="hero friends"/>
+                    <div className="hidden md:block">
+                        <Image width="400" height="400" style={{filter:"invert(18%) sepia(7%) saturate(4287%) hue-rotate(206deg) brightness(98%) contrast(92%)"}} src={hero_friends} alt="hero friends"/>
+                    </div>
                 </div>
             }
         </main>
