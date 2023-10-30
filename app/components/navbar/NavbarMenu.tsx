@@ -53,14 +53,13 @@ const NavbarMenu = () => {
     }
 
 
-
     return (
         <div>
             <button className="md:hidden" onClick={()=>setSidebarOpen(true)}>
                 <GrMenu size={26}/>
             </button>
-            <ul style={{marginRight: sidebarOpen ? "0" : "-224px"}} className={`menu ${navbarStyles} ${sidebarStyles}`}>
-                <button onClick={()=>setSidebarOpen(false)} className="md:hidden absolute top-0 right-0 p-2">X</button>
+            <ul style={{right: sidebarOpen ? "0" : "-224px"}} className={`menu ${navbarStyles} ${sidebarStyles}`}>
+                <button onClick={()=>setSidebarOpen(false)} className="md:hidden absolute top-0 right-0 p-3"><span className="text-2xl">X</span></button>
                 {links.filter(l=>user ? l.loggedIn : !l.loggedIn).map(link=>
                     (<li onClick={() => {
                             router.push(link.url)
