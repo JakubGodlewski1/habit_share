@@ -33,7 +33,7 @@ const links = [
 ]
 
 //styles
-const sidebarStyles = "menu-vertical absolute bg-secondary z-50 top-0 right-0 h-screen w-52 shadow-[0_2px_6px_0_rgba(0,0,0,0.25)] items-start transition-all"
+const sidebarStyles = "menu-vertical fixed bg-secondary z-50 top-0 right-0 h-screen w-52 shadow-[0_2px_6px_0_rgba(0,0,0,0.25)] items-start transition-all"
 const navbarStyles = "md:menu-horizontal md:static md:h-auto md:w-auto md:shadow-none"
 
 const NavbarMenu = () => {
