@@ -37,10 +37,10 @@ const FriendsPage = () => {
             {isPending && <span>Loading...</span>}
             {haveFriends && friends && <FriendCartsContainer friends={friends}/>}
             {haveFriends === false &&
-                <div className="flex justify-around items-center py-8 px-4 rounded-lg absolute top-[50vh] left-[50vw] -z-10 w-[400px] md:w-[600px] -translate-x-1/2 -translate-y-1/2 lg:w-[800px]">
+                <div style={{height:"calc(100vh - 160px)"}} className="m-auto flex justify-around items-center py-8 px-4">
                     <div>
-                        <h1 className="text-center text-6xl mb-4">No friends yet</h1>
-                        <h3 className="text-center mb-4 text-2xl">Add friends to fully enjoy habitShare</h3>
+                        <h1 className="text-center text-5xl sm:text-6xl mb-4">No friends yet</h1>
+                        <h3 className="text-center mb-4 text-1xl sm:text-2xl">Add friends to fully enjoy habitShare</h3>
                         <AddFriendBtn disableText={true} className="btn-primary mx-auto"/>
                     </div>
                     <div className="hidden lg:block">
