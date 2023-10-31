@@ -34,7 +34,7 @@ const SignIn = () => {
                         className="input-sm input"
                         value={email}
                         onChange={e=>setCredentials(p=>({...p, email: e.target.value}))}
-                        type="text"
+                        type="email"
                     />
                 </label>
                 {validationErrors.emailErr && <span className="alert-error alert">{validationErrors.emailErr}</span>}

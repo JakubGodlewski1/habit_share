@@ -5,7 +5,9 @@ import {addMonths, differenceInDays, endOfYesterday, isFirstDayOfMonth, isMonday
 import {calculateDailyPoints} from "@/lib/calculatePoints";
 import {generateMultiplier} from "@/lib/generateMultiplier";
 
-const updateHabits= (habits: Habit[]):Habit[] => {
+export const revalidate = 0
+
+const updateHabits = (habits: Habit[]):Habit[] => {
     const yesterday = convertDate(endOfYesterday())
     const resetHabit = (habit:Habit) => {
         return {
