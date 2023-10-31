@@ -43,7 +43,7 @@ const FriendCart = ({imgSrc, strike, points, todoToday, doneToday, name, email}:
                         </div>
                     </div>
                     <h3 className="flex-grow text-accent">{name}</h3>
-                    <StatCol label="Strike" value={strike+" days"}/>
+                    <StatCol label="Strike" value={strike+ (strike===1 ? " day" : " days")}/>
                     <StatCol label="Score" value={points.toString()}/>
                     <button onClick={openModal} className="p-1">
                         <BiDotsVerticalRounded color="#dbd2f4" size={32}/>

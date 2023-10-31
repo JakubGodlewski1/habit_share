@@ -32,7 +32,7 @@ const FriendsPage = () => {
     return (
         <main>
             <div className="flex justify-end mb-4">
-                <AddFriendBtn/>
+                {haveFriends && <AddFriendBtn/>}
             </div>
             {isPending && <span>Loading...</span>}
             {haveFriends && friends && <FriendCartsContainer friends={friends}/>}
