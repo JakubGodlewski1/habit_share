@@ -19,8 +19,9 @@ const SignIn = () => {
 
 
 //functions
-    const onSubmit = (e:FormEvent<HTMLFormElement>) =>{
+    const onSubmit = async (e:FormEvent<HTMLFormElement>) =>{
         e.preventDefault()
+        await signIn({email, password})
 
     }
 
@@ -50,8 +51,8 @@ const SignIn = () => {
                 {validationErrors.passwordErr && <span className="alert-error alert">{validationErrors.passwordErr}</span>}
                 {serverError && <span className="alert-error alert">{serverError}</span>}
                 <div className="two-buttons">
-                    <button onClick={()=>signIn({email, password})} disabled={isPending} className="btn btn-primary">{isPending ? "Signing in..." : "Sign in"}</button>
-                    <button>Forgot password?</button>
+                    <button disabled={isPending} className="btn btn-primary">{isPending ? "Signing in..." : "Sign in"}</button>
+                    <button type="button">Forgot password?</button>
                 </div>
             </form>
             {/*<GoogleAuthBtn type="signIn"/>*/}
